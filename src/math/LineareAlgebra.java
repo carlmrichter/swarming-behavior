@@ -316,10 +316,8 @@ public final class LineareAlgebra {
     // Additional
 
     public static Vektor2D rotateVektor(Vektor2D v, double angle){
-        Vektor2D vRet = new Vektor2D(v);
-        double x = vRet.x, y = vRet.y;
-        vRet.x = x * Math.cos(angle) - y * Math.sin(angle);
-        vRet.y = y * Math.sin(angle) + y * Math.cos(angle);
-        return vRet;
+        Vektor2D tmp = new Vektor2D(v);
+        tmp.rotate(angle);
+        return tmp;
     }
 }

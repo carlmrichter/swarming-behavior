@@ -10,7 +10,6 @@ public abstract class PhysicsObject extends BaseObject {
     public float mass;
     public float maxSpeed;
 
-    public Vektor2D direction;
     public float speed;
 
 

@@ -92,8 +92,9 @@ public class Vektor2D {
     }
 
     public void rotate(double angle){
-        double x = this.x, y = this.y;
-        this.x = x * Math.cos(angle) - y * Math.sin(angle);
-        this.y = y * Math.sin(angle) + y * Math.cos(angle);
+        double xTemp = this.x;
+        double yTemp = this.y;
+        this.x = xTemp * Math.cos(LineareAlgebra.degreeToRad(angle)) - yTemp * Math.sin(LineareAlgebra.degreeToRad(angle));
+        this.y = xTemp * Math.sin(LineareAlgebra.degreeToRad(angle)) + yTemp * Math.cos(LineareAlgebra.degreeToRad(angle));
     }
 }

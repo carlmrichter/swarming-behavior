@@ -313,4 +313,13 @@ public final class LineareAlgebra {
         System.out.println(v.toString());
     }
 
+    // Additional
+
+    public static Vektor2D rotateVektor(Vektor2D v, double angle){
+        Vektor2D vRet = new Vektor2D(v);
+        double x = vRet.x, y = vRet.y;
+        vRet.x = x * Math.cos(angle) - y * Math.sin(angle);
+        vRet.y = y * Math.sin(angle) + y * Math.cos(angle);
+        return vRet;
+    }
 }

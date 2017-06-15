@@ -90,4 +90,10 @@ public class Vektor2D {
     public String toString() {
         return "x: " + this.x + "\ny: " + this.y + "\n";
     }
+
+    public void rotate(double angle){
+        double x = this.x, y = this.y;
+        this.x = x * Math.cos(angle) - y * Math.sin(angle);
+        this.y = y * Math.sin(angle) + y * Math.cos(angle);
+    }
 }

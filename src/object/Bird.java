@@ -18,6 +18,7 @@ public class Bird extends PhysicsObject {
     public Vektor2D orientation;
     public Vektor2D position;
 
+
     public Bird(float x, float y){
         super(x, y);
         this.behavior = new BirdBehavior(this);
@@ -39,7 +40,7 @@ public class Bird extends PhysicsObject {
 //        glRotatef(1, 0, 0, 1);
 //        glTranslatef(-xPos, -yPos, 0);
 
-        orientation.rotate(1);
+
 
         Vektor2D point1 = LineareAlgebra.add(position, LineareAlgebra.mult(orientation, 15));
         Vektor2D point2 = LineareAlgebra.sub(position, LineareAlgebra.mult(orientation, 15));

@@ -12,7 +12,7 @@ public class BirdBehavior implements Behavior {
 
     @Override
     public void update() {
-        bird.yPos = 600-Mouse.getY();
-        bird.xPos = Mouse.getX();
+//        bird.yPos = 600-Mouse.getY();
+//        bird.xPos = Mouse.getX();
     }
 }

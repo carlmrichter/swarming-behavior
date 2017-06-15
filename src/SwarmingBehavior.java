@@ -13,32 +13,35 @@ public class SwarmingBehavior extends Window {
 
     private Label labelMouse;
     private Bird bird;
+    private Bird bird2;
 
     public SwarmingBehavior() {
         super("Swarming behavior", 800, 600);
 
-        Frame frame = new Frame("test");
-        frame.setVisible(true);
-        frame.setSize(800, 650);
-        frame.setLayout(new BorderLayout());
-        Canvas canvas = new Canvas();
+//        Frame frame = new Frame("test");
+//        frame.setVisible(true);
+//        frame.setSize(800, 650);
+//        frame.setLayout(new BorderLayout());
+//        Canvas canvas = new Canvas();
+//
+//        Panel panel = new Panel();
+//        panel.setLayout(new FlowLayout());
+//        labelMouse = new Label("X: 000, Y: 000");
+//        panel.add(labelMouse);
+//        frame.add(panel, BorderLayout.SOUTH);
+//        frame.add(canvas);
+//        frame.addWindowListener(new WindowAdapter() {
+//            @Override
+//            public void windowClosing(WindowEvent e) {
+//                System.exit(0);
+//            }
+//        });
+//
+//        initDisplay(canvas);
 
-        Panel panel = new Panel();
-        panel.setLayout(new FlowLayout());
-        labelMouse = new Label("X: 000, Y: 000");
-        panel.add(labelMouse);
-        frame.add(panel, BorderLayout.SOUTH);
-        frame.add(canvas);
-        frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
-
-        initDisplay(canvas);
-
+        initDisplay();
         bird = new Bird(300, 100);
+        bird2 = new Bird(100, 50);
     }
 
     @Override
@@ -56,8 +59,9 @@ public class SwarmingBehavior extends Window {
 
 
             bird.render();
+            bird2.render();
 
-            labelMouse.setText("X: " + Mouse.getX() + " , Y: " + Mouse.getY());
+            //labelMouse.setText("X: " + Mouse.getX() + " , Y: " + Mouse.getY());
             Display.update();
             Display.sync(60);
         }

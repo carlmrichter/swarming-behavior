@@ -1,11 +1,7 @@
 import frame.Window;
-import object.Bird;
-import org.lwjgl.input.Mouse;
+import object.Snapper;
 import org.lwjgl.opengl.Display;
 
-import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -13,27 +9,27 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class SwarmingBehavior extends Window {
 
-    private Bird bird;
-    private Bird bird2;
+    private Snapper snapper;
+    private Snapper snapper2;
 
     private final static int COUNT = 100;
 
-    private Bird[] birds;
+    private Snapper[] snappers;
 
     public SwarmingBehavior() {
         super("Swarming behavior", 800, 600);
 
 
         initDisplay();
-        bird = new Bird(300, 100);
-        bird2 = new Bird(100, 50);
+        snapper = new Snapper(300, 100);
+        snapper2 = new Snapper(100, 50);
 
-        birds = new Bird[COUNT];
+        snappers = new Snapper[COUNT];
 
         Random random = ThreadLocalRandom.current();
         for (int i = 0; i < COUNT; i++) {
 
-            birds[i] = new Bird(random.nextInt(800), random.nextInt(600));
+            snappers[i] = new Snapper(random.nextInt(800), random.nextInt(600));
         }
     }
 
@@ -52,11 +48,11 @@ public class SwarmingBehavior extends Window {
 
 
             for (int i = 0; i < COUNT; i++) {
-                birds[i].render();
+                snappers[i].render();
             }
 
-            //bird.render();
-            //bird2.render();
+            //snapper.render();
+            //snapper2.render();
 
             //labelMouse.setText("X: " + Mouse.getX() + " , Y: " + Mouse.getY());
             Display.update();

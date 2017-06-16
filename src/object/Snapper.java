@@ -1,26 +1,30 @@
 package object;
 
 
-import behavior.BirdBehavior;
+import behavior.SnapperBehavior;
 import math.LineareAlgebra;
 import math.Vektor2D;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL11.glEnd;
 
-public class Bird extends PhysicsObject {
+public class Snapper extends Fish {
 
     public Vektor2D orientation;
     public Vektor2D position;
     public double rotationSpeed;
 
 
-    public Bird(float x, float y){
+    public Snapper(float x, float y){
         super(x, y);
-        this.behavior = new BirdBehavior(this);
+        this.behavior = new SnapperBehavior(this);
         this.speed = 2;
         this.rotationSpeed = 2;
         this.orientation = new Vektor2D(1,0);
         this.position = new Vektor2D(x, y);
+    }
+
+    public Snapper(float x, float y, float speed, double rotationSpeed, float orientation, double position){
+        super(x,y);
     }
 
 

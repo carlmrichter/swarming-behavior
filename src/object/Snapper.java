@@ -9,34 +9,24 @@ import static org.lwjgl.opengl.GL11.glEnd;
 
 public class Snapper extends Fish {
 
-    public Vektor2D orientation;
-    public Vektor2D position;
-    public double rotationSpeed;
-
-
-    public Snapper(float x, float y){
+    public Snapper(double x, double y){
         super(x, y);
-        this.behavior = new BirdBehavior(this);
-        this.speed = 2;
-        this.rotationSpeed = 2;
-        this.orientation = new Vektor2D(1,0);
-        this.position = new Vektor2D(x, y);
+        setBehavior(new SnapperBehavior(this));
     }
 
-    public Snapper(float x, float y, float speed, double rotationSpeed, Vektor2D orientation, Vektor2D position){
+    public Snapper(double x, double y, double speed, double rotationSpeed, double orientationAngle){
         super(x,y);
-        this.behavior = new SnapperBehavior(this);
-        this.speed = speed;
-        this.rotationSpeed = rotationSpeed;
-        this.orientation = orientation;
-        this.position = position;
+        setBehavior(new SnapperBehavior(this));
+        setSpeed(speed);
+        setRotationSpeed(rotationSpeed);
+        setOrientation(orientationAngle);
     }
 
 
 
     @Override
     public void render() {
-        behavior.update();
+        update();
 
         glColor3d(1, 1, 0);
 

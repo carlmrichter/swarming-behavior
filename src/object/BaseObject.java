@@ -1,16 +1,17 @@
 package object;
 
+import math.Vektor2D;
+
 public abstract class BaseObject {
     public int id;
-    public float xPos, yPos;
+    public Vektor2D position;
 
     public BaseObject() {
         this(0, 0);
     }
 
-    public BaseObject(float xPos, float yPos) {
-        this.xPos = xPos;
-        this.yPos = yPos;
+    public BaseObject(double x, double y) {
+        this.position = new Vektor2D(x, y);
     }
 
     public abstract void render();

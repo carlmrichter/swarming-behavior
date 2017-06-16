@@ -59,7 +59,7 @@ public class SwarmingBehavior extends Window {
 
 
             bird.render();
-            bird2.render();
+            //bird2.render();
 
             //labelMouse.setText("X: " + Mouse.getX() + " , Y: " + Mouse.getY());
             Display.update();

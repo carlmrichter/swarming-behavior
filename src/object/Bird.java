@@ -4,25 +4,21 @@ package object;
 import behavior.BirdBehavior;
 import math.LineareAlgebra;
 import math.Vektor2D;
-import org.lwjgl.input.Mouse;
-
-import javax.sound.sampled.Line;
-
-import static math.LineareAlgebra.mult;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glVertex2f;
 
 public class Bird extends PhysicsObject {
 
     public Vektor2D orientation;
     public Vektor2D position;
+    public double rotationSpeed;
 
 
     public Bird(float x, float y){
         super(x, y);
         this.behavior = new BirdBehavior(this);
         this.speed = 1;
+        this.rotationSpeed = 2;
         this.orientation = new Vektor2D(1,0);
         this.position = new Vektor2D(x, y);
     }

@@ -23,8 +23,13 @@ public class Snapper extends Fish {
         this.position = new Vektor2D(x, y);
     }
 
-    public Snapper(float x, float y, float speed, double rotationSpeed, float orientation, double position){
+    public Snapper(float x, float y, float speed, double rotationSpeed, Vektor2D orientation, Vektor2D position){
         super(x,y);
+        this.behavior = new SnapperBehavior(this);
+        this.speed = speed;
+        this.rotationSpeed = rotationSpeed;
+        this.orientation = orientation;
+        this.position = position;
     }
 
 

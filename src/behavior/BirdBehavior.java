@@ -11,7 +11,6 @@ public class BirdBehavior implements Behavior {
     private Bird bird;
     private int counter;
 
-    private short rotationDirection = 1;
 
     private Vektor2D target;
     private Vektor2D path;
@@ -26,39 +25,18 @@ public class BirdBehavior implements Behavior {
 
         if (Mouse.isButtonDown(0)) {
             target = new Vektor2D(Mouse.getX(), 600-Mouse.getY());
-            path = LineareAlgebra.normalize(LineareAlgebra.sub(target, bird.position));
-
-
         }
 
-        if (target != null) {
-
-            double angle = Math.round(LineareAlgebra.cosEquation(bird.orientation, path));
-
-            double orient = LineareAlgebra.crossProduct(bird.orientation, path);
-
-            //System.out.println("angle: " + angle + "\torient: " + orient);
-
-            if (angle != 0) {
-                rotateToTarget(angle, orient);
-            }
-
-        }
+        flyToTarget();
 
 
     }
 
-    private void rotateToTarget(double angle, double orient){
+    private void rotateToTarget(double angle){
 
 
-        if (orient < 0) {
-            rotationDirection = -1;
-        } else {
-            rotationDirection = 1;
-        }
-
-        //System.out.println("Angle: " + angle + "\trotationDirection: " + rotationDirection);
-
+        // Richtungsbestimmung (in welche Richtung muss gedreht werden?)
+        int rotationDirection = LineareAlgebra.crossProduct(bird.orientation, path) > 0 ? 1 : -1;
 
         if (angle >= bird.rotationSpeed) {
 
@@ -66,7 +44,25 @@ public class BirdBehavior implements Behavior {
         } else {
             bird.orientation.rotate(angle);
         }
+    }
+
+    private void flyToTarget() {
+        if (target != null) {
+
+            // calculate path
+            path = LineareAlgebra.normalize(LineareAlgebra.sub(target, bird.position));
 
 
+            // Winkel zwischen der aktuellen Richtung und dem Vektor zwischen der aktuellen Position und dem Target
+            double angle = Math.round(LineareAlgebra.cosEquation(bird.orientation, path));
+
+
+
+            rotateToTarget(angle);
+            bird.position.add(LineareAlgebra.mult(bird.orientation, bird.speed));
+
+
+
+        }
     }
 }

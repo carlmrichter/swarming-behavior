@@ -6,42 +6,35 @@ import org.lwjgl.opengl.Display;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static org.lwjgl.opengl.GL11.*;
 
 public class SwarmingBehavior extends Window {
 
-    private Label labelMouse;
     private Bird bird;
     private Bird bird2;
+
+    private final static int COUNT = 100;
+
+    private Bird[] birds;
 
     public SwarmingBehavior() {
         super("Swarming behavior", 800, 600);
 
-//        Frame frame = new Frame("test");
-//        frame.setVisible(true);
-//        frame.setSize(800, 650);
-//        frame.setLayout(new BorderLayout());
-//        Canvas canvas = new Canvas();
-//
-//        Panel panel = new Panel();
-//        panel.setLayout(new FlowLayout());
-//        labelMouse = new Label("X: 000, Y: 000");
-//        panel.add(labelMouse);
-//        frame.add(panel, BorderLayout.SOUTH);
-//        frame.add(canvas);
-//        frame.addWindowListener(new WindowAdapter() {
-//            @Override
-//            public void windowClosing(WindowEvent e) {
-//                System.exit(0);
-//            }
-//        });
-//
-//        initDisplay(canvas);
 
         initDisplay();
         bird = new Bird(300, 100);
         bird2 = new Bird(100, 50);
+
+        birds = new Bird[COUNT];
+
+        Random random = ThreadLocalRandom.current();
+        for (int i = 0; i < COUNT; i++) {
+
+            birds[i] = new Bird(random.nextInt(800), random.nextInt(600));
+        }
     }
 
     @Override
@@ -58,7 +51,11 @@ public class SwarmingBehavior extends Window {
 
 
 
-            bird.render();
+            for (int i = 0; i < COUNT; i++) {
+                birds[i].render();
+            }
+
+            //bird.render();
             //bird2.render();
 
             //labelMouse.setText("X: " + Mouse.getX() + " , Y: " + Mouse.getY());

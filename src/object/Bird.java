@@ -17,7 +17,7 @@ public class Bird extends PhysicsObject {
     public Bird(float x, float y){
         super(x, y);
         this.behavior = new BirdBehavior(this);
-        this.speed = 1;
+        this.speed = 2;
         this.rotationSpeed = 2;
         this.orientation = new Vektor2D(1,0);
         this.position = new Vektor2D(x, y);

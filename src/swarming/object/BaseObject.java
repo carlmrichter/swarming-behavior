@@ -1,6 +1,6 @@
-package object;
+package swarming.object;
 
-import math.Vektor2D;
+import swarming.math.Vektor2D;
 
 public abstract class BaseObject {
     public int id;

@@ -1,9 +1,11 @@
-package behavior;
+package swarming.behavior;
 
-import math.LineareAlgebra;
-import math.Vektor2D;
-import object.Snapper;
+import swarming.SwarmingBehavior;
+import swarming.math.LineareAlgebra;
+import swarming.math.Vektor2D;
+import swarming.object.Snapper;
 import org.lwjgl.input.Mouse;
+
 
 public class SnapperBehavior implements Behavior {
     private Snapper snapper;
@@ -22,7 +24,7 @@ public class SnapperBehavior implements Behavior {
     public void update() {
 
         if (Mouse.isButtonDown(0)) {
-            target = new Vektor2D(Mouse.getX(), 600-Mouse.getY());
+            target = new Vektor2D(Mouse.getX(), SwarmingBehavior.HEIGHT-Mouse.getY());
         }
 
         swimToTarget();

@@ -1,7 +1,7 @@
-package object;
+package swarming.object;
 
-import math.LineareAlgebra;
-import math.Vektor2D;
+import swarming.math.LineareAlgebra;
+import swarming.math.Vektor2D;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

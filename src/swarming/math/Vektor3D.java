@@ -1,4 +1,4 @@
-package math;
+package swarming.math;
 
 public class Vektor3D {
     public double x, y, z;

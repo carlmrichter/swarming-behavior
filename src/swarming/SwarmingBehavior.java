@@ -1,5 +1,8 @@
-import frame.Window;
-import object.Snapper;
+package swarming;
+
+import swarming.frame.Window;
+import swarming.math.Vektor2D;
+import swarming.object.Snapper;
 import org.lwjgl.opengl.Display;
 
 import java.util.Random;
@@ -12,12 +15,15 @@ public class SwarmingBehavior extends Window {
     private Snapper snapper;
     private Snapper snapper2;
 
-    private final static int COUNT = 100;
+    private final static int COUNT = 20000;
+    public static final int WIDTH = 1280;
+    public static final int HEIGHT = 900;
+
 
     private Snapper[] snappers;
 
     public SwarmingBehavior() {
-        super("Swarming behavior", 800, 600);
+        super("Swarming swarming.behavior", WIDTH, HEIGHT);
 
 
         initDisplay();
@@ -29,7 +35,8 @@ public class SwarmingBehavior extends Window {
         Random random = ThreadLocalRandom.current();
         for (int i = 0; i < COUNT; i++) {
 
-            snappers[i] = new Snapper(random.nextInt(800), random.nextInt(600));
+            //snappers[i] = new Snapper(random.nextInt(800), random.nextInt(600));
+            snappers[i] = new Snapper(random.nextInt(WIDTH),random.nextInt(HEIGHT), random.nextFloat() * 0.5f + 1, random.nextFloat()+1.2,random.nextInt(359));
         }
     }
 
@@ -41,7 +48,7 @@ public class SwarmingBehavior extends Window {
 
             glMatrixMode(GL_PROJECTION);
             glLoadIdentity();
-            glOrtho (0, 800, 600, 0, 0, 1);
+            glOrtho (0, WIDTH, HEIGHT, 0, 0, 1);
             glMatrixMode(GL_MODELVIEW);
             glDisable(GL_DEPTH_TEST);
 

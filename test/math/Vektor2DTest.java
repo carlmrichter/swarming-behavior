@@ -1,4 +1,4 @@
-package math;
+package swarming.math;
 
 import org.junit.Assert;
 import org.junit.Before;

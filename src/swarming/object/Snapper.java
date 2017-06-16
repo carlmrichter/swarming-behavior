@@ -1,9 +1,9 @@
-package object;
+package swarming.object;
 
 
-import behavior.SnapperBehavior;
-import math.LineareAlgebra;
-import math.Vektor2D;
+import swarming.behavior.SnapperBehavior;
+import swarming.math.LineareAlgebra;
+import swarming.math.Vektor2D;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL11.glEnd;
 

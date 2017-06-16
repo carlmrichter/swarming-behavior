@@ -1,7 +1,7 @@
-package object;
+package swarming.object;
 
-import behavior.Behavior;
-import math.Vektor2D;
+import swarming.behavior.Behavior;
+import swarming.math.Vektor2D;
 
 public abstract class Fish extends BaseObject {
 

@@ -1,4 +1,4 @@
-package math;
+package swarming.math;
 
 public final class LineareAlgebra {
 

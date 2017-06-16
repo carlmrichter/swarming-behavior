@@ -10,6 +10,7 @@ public abstract class Fish extends BaseObject {
     public Vektor2D orientation;
     public double rotationSpeed;
 
+
     public Fish(double x, double y) {
         super(x, y);
         this.speed = 1;

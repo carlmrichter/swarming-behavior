@@ -3,6 +3,7 @@ package swarming;
 import swarming.frame.Window;
 import swarming.math.Vektor2D;
 import swarming.object.Snapper;
+import object.SnapperManager;
 import org.lwjgl.opengl.Display;
 
 import java.util.Random;
@@ -19,24 +20,22 @@ public class SwarmingBehavior extends Window {
     public static final int WIDTH = 1280;
     public static final int HEIGHT = 900;
 
-
-    private Snapper[] snappers;
+    private SnapperManager snappers;
 
     public SwarmingBehavior() {
-        super("Swarming swarming.behavior", WIDTH, HEIGHT);
+        super("Swarming behavior", WIDTH, HEIGHT);
 
 
         initDisplay();
-        snapper = new Snapper(300, 100);
-        snapper2 = new Snapper(100, 50);
+//        snapper = new Snapper(300, 100);
+//        snapper2 = new Snapper(100, 50);
 
-        snappers = new Snapper[COUNT];
+        snappers = SnapperManager.getInstance();
 
         Random random = ThreadLocalRandom.current();
-        for (int i = 0; i < COUNT; i++) {
+        for (int i = 1; i <= COUNT; i++) {
 
-            //snappers[i] = new Snapper(random.nextInt(800), random.nextInt(600));
-            snappers[i] = new Snapper(random.nextInt(WIDTH),random.nextInt(HEIGHT), random.nextFloat() * 0.5f + 1, random.nextFloat()+1.2,random.nextInt(359));
+            snappers.addSnapper(new Snapper(random.nextInt(WIDTH),random.nextInt(HEIGHT), random.nextFloat() * 0.5f + 1, random.nextFloat()+1.2,random.nextInt(359)));
         }
     }
 
@@ -54,14 +53,13 @@ public class SwarmingBehavior extends Window {
 
 
 
-            for (int i = 0; i < COUNT; i++) {
-                snappers[i].render();
+            for (int i = 1; i <= snappers.getSnapperCount(); i++) {
+                snappers.getSnapper(i).render();
             }
 
             //snapper.render();
             //snapper2.render();
 
-            //labelMouse.setText("X: " + Mouse.getX() + " , Y: " + Mouse.getY());
             Display.update();
             Display.sync(60);
         }

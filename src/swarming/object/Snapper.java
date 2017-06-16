@@ -9,14 +9,16 @@ import static org.lwjgl.opengl.GL11.glEnd;
 
 public class Snapper extends Fish {
 
+    private static int counter = 0;
+
     public Snapper(double x, double y){
         super(x, y);
         setBehavior(new SnapperBehavior(this));
+        this.id = ++counter;
     }
 
     public Snapper(double x, double y, double speed, double rotationSpeed, double orientationAngle){
-        super(x,y);
-        setBehavior(new SnapperBehavior(this));
+        this(x,y);
         setSpeed(speed);
         setRotationSpeed(rotationSpeed);
         setOrientation(orientationAngle);

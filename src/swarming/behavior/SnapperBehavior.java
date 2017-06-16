@@ -1,5 +1,6 @@
 package swarming.behavior;
 
+import object.SnapperManager;
 import swarming.SwarmingBehavior;
 import swarming.math.LineareAlgebra;
 import swarming.math.Vektor2D;
@@ -9,15 +10,17 @@ import org.lwjgl.input.Mouse;
 
 public class SnapperBehavior implements Behavior {
     private Snapper snapper;
-    private int counter;
-
+    private SnapperManager snappers;
 
     private Vektor2D target;
     private Vektor2D path;
 
+
+    private double comfortRadius;
+
     public SnapperBehavior(Snapper snapper) {
         this.snapper = snapper;
-        counter = 0;
+        this.snappers = SnapperManager.getInstance();
     }
 
     @Override
@@ -28,7 +31,7 @@ public class SnapperBehavior implements Behavior {
         }
 
         swimToTarget();
-
+        checkCollision();
 
     }
 
@@ -62,6 +65,12 @@ public class SnapperBehavior implements Behavior {
             snapper.position.add(LineareAlgebra.mult(snapper.orientation, snapper.speed));
 
 
+
+        }
+    }
+
+    private void checkCollision() {
+        for (int i = 1; i <= snappers.getSnapperCount(); i++) {
 
         }
     }

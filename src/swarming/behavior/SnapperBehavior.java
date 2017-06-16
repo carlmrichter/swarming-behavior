@@ -1,6 +1,6 @@
 package swarming.behavior;
 
-import object.SnapperManager;
+import swarming.object.SnapperManager;
 import swarming.SwarmingBehavior;
 import swarming.math.LineareAlgebra;
 import swarming.math.Vektor2D;

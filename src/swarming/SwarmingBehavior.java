@@ -1,9 +1,8 @@
 package swarming;
 
 import swarming.frame.Window;
-import swarming.math.Vektor2D;
 import swarming.object.Snapper;
-import object.SnapperManager;
+import swarming.object.SnapperManager;
 import org.lwjgl.opengl.Display;
 
 import java.util.Random;

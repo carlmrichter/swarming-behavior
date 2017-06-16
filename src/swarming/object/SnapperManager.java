@@ -1,4 +1,4 @@
-package object;
+package swarming.object;
 
 
 import java.util.HashMap;

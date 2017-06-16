@@ -1,15 +1,20 @@
 package object;
 
 import behavior.Behavior;
+import math.Vektor2D;
 
-public abstract class MovingObject extends BaseObject {
+public abstract class Fish extends BaseObject {
 
-    public float ySpeed;
     public Behavior behavior = null;
 
-    public MovingObject(float x, float y, float ySpeed) {
+    public float mass;
+    public float maxSpeed;
+
+    public float speed;
+
+
+    public Fish(float x, float y) {
         super(x, y);
-        this.ySpeed = ySpeed;
     }
 
     public void setBehavior(Behavior behavior) {

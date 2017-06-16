@@ -1,0 +1,66 @@
+package behavior;
+
+import math.LineareAlgebra;
+import math.Vektor2D;
+import object.Snapper;
+import org.lwjgl.input.Mouse;
+
+public class SnapperBehavior implements Behavior {
+    private Snapper snapper;
+    private int counter;
+
+
+    private Vektor2D target;
+    private Vektor2D path;
+
+    public SnapperBehavior(Snapper snapper) {
+        this.snapper = snapper;
+        counter = 0;
+    }
+
+    @Override
+    public void update() {
+
+        if (Mouse.isButtonDown(0)) {
+            target = new Vektor2D(Mouse.getX(), 600-Mouse.getY());
+        }
+
+        swimToTarget();
+
+
+    }
+
+    private void rotateToTarget(double angle){
+
+
+        // Richtungsbestimmung (in welche Richtung muss gedreht werden?)
+        int rotationDirection = LineareAlgebra.crossProduct(snapper.orientation, path) > 0 ? 1 : -1;
+
+        if (angle >= snapper.rotationSpeed) {
+
+            snapper.orientation.rotate(snapper.rotationSpeed * rotationDirection);
+        } else {
+            snapper.orientation.rotate(angle);
+        }
+    }
+
+    private void swimToTarget() {
+        if (target != null) {
+
+            // calculate path
+            path = LineareAlgebra.normalize(LineareAlgebra.sub(target, snapper.position));
+
+
+            // Winkel zwischen der aktuellen Richtung und dem Vektor zwischen der aktuellen Position und dem Target
+            double angle = Math.round(LineareAlgebra.cosEquation(snapper.orientation, path));
+
+
+
+            rotateToTarget(angle);
+            snapper.position.add(LineareAlgebra.mult(snapper.orientation, snapper.speed));
+
+
+
+        }
+    }
+}

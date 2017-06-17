@@ -83,6 +83,7 @@ public class Vektor2D {
     }
 
     public void normalize() {
+        if (isNullVector()) return;
         this.div(this.length());
     }
 

@@ -9,7 +9,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 
-public class BirdTest {
+public class SnapperTest {
 
     public Vektor2D orientation;
     public Vektor2D position;

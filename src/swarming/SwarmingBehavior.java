@@ -1,13 +1,12 @@
 package swarming;
 
+import org.lwjgl.input.Mouse;
 import swarming.frame.Window;
 import swarming.object.Snapper;
 import swarming.object.SnapperManager;
 import org.lwjgl.opengl.Display;
-
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
-
 import static org.lwjgl.opengl.GL11.*;
 
 public class SwarmingBehavior extends Window {
@@ -15,26 +14,23 @@ public class SwarmingBehavior extends Window {
     private Snapper snapper;
     private Snapper snapper2;
 
-    private final static int COUNT = 20000;
-    public static final int WIDTH = 1280;
-    public static final int HEIGHT = 900;
+    private final static int COUNT = 500;
+    public static final int WIDTH = 3200;
+    public static final int HEIGHT = 1800;
 
     private SnapperManager snappers;
 
     public SwarmingBehavior() {
         super("Swarming behavior", WIDTH, HEIGHT);
-
-
         initDisplay();
-//        snapper = new Snapper(300, 100);
-//        snapper2 = new Snapper(100, 50);
 
         snappers = SnapperManager.getInstance();
 
         Random random = ThreadLocalRandom.current();
         for (int i = 1; i <= COUNT; i++) {
-
-            snappers.addSnapper(new Snapper(random.nextInt(WIDTH),random.nextInt(HEIGHT), random.nextFloat() * 0.5f + 1, random.nextFloat()+1.2,random.nextInt(359)));
+            Snapper snapper = new Snapper(random.nextInt(WIDTH), random.nextInt(HEIGHT), random.nextInt(359));
+            snapper.setBehavior(1, 1, 30);
+            snappers.addSnapper(snapper);
         }
     }
 
@@ -56,8 +52,8 @@ public class SwarmingBehavior extends Window {
                 snappers.getSnapper(i).render();
             }
 
-            //snapper.render();
-            //snapper2.render();
+
+            //handleInputs();
 
             Display.update();
             Display.sync(60);
@@ -65,6 +61,20 @@ public class SwarmingBehavior extends Window {
         Display.destroy();
     }
 
+    private void handleInputs() {
+        if (Mouse.isButtonDown(0)) {
+
+            int dx = Mouse.getDX();
+            int dy = -Mouse.getDY();
+
+            glTranslatef(dx, dy, 0);
+            Snapper.BORDER_LEFT -= dx;
+            Snapper.BORDER_RIGHT -= dx;
+            Snapper.BORDER_TOP -= dy;
+            Snapper.BORDER_BOTTOM -= dy;
+        }
+
+    }
 
     public static void main(String[] args){
         new SwarmingBehavior().start();

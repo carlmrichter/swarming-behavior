@@ -14,7 +14,7 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class SwarmingBehavior extends Window {
 
-    private final static int SNAPPER_COUNT = 3, BARRACUDA_COUNT = 1;
+    private final static int SNAPPER_COUNT = 300, BARRACUDA_COUNT = 2;
     public static final int WIDTH = 3200;
     public static final int HEIGHT = 1800;
 
@@ -44,7 +44,7 @@ public class SwarmingBehavior extends Window {
 
         for (int i = 1; i <= BARRACUDA_COUNT; i++) {
             Barracuda barracuda = new Barracuda(random.nextInt(WIDTH), random.nextInt(HEIGHT), random.nextInt(359));
-            barracuda.setBehavior(2, 2);
+            barracuda.setBehavior(3, 2);
             fishManager.addFish(barracuda);
         }
     }
@@ -64,7 +64,11 @@ public class SwarmingBehavior extends Window {
             glClearColor(0.1f, 0.2f, 0.3f, 1);
             glClear(GL_COLOR_BUFFER_BIT);
 
-            fishManager.getFishMap().forEach((id, fish) -> fish.render());
+            fishManager.getFishMap().forEach((id, fish) -> {
+                if (!fish.eaten) {
+                    fish.render();
+                }
+            });
 
 //            for (int i = 1; i <= fishManager.getFishCount(); i++) {
 //

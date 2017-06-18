@@ -7,6 +7,7 @@ public abstract class Fish extends BaseObject {
 
     protected Behavior behavior = null;
 
+    public boolean eaten = false;
     public Vektor2D orientation;
 
     public Fish(double x, double y) {

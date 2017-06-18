@@ -3,6 +3,7 @@ package swarming.behavior;
 import swarming.math.LineareAlgebra;
 import swarming.math.Vektor2D;
 import swarming.object.Barracuda;
+import swarming.object.Fish;
 import swarming.object.FishManager;
 import swarming.object.Snapper;
 
@@ -45,18 +46,19 @@ public class BarracudaBehavior extends FishBehavior {
         Vektor2D seekForce = new Vektor2D();
 
         for (int i = 1; i <= fishManager.getFishCount(); i++) {
-            if (!(fishManager.getFish(i) instanceof Snapper)) continue;
+            Fish fish = fishManager.getFish(i);
+            if (fish.eaten || !(fish instanceof Snapper)) continue;
 
 
-            Vektor2D distance = LineareAlgebra.sub(fishManager.getFish(i).position, barracuda.position);
+            Vektor2D distance = LineareAlgebra.sub(fish.position, barracuda.position);
 
             double angle = LineareAlgebra.cosEquation(distance, barracuda.orientation);
             double dist = LineareAlgebra.length(distance);
-            if (/*dist < SEEK_RADIUS &&*/ angle < 90) {
+            if (dist < SEEK_RADIUS && angle < 90) {
                 seekForce.add(distance);
             }
-            if (dist < 10) {
-                fishManager.removeFish(((Snapper) fishManager.getFish(i)).id);
+            if (dist < 15) {
+                fish.eaten = true;
             }
 
         }

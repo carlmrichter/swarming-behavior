@@ -1,6 +1,7 @@
 package swarming.behavior;
 
 import swarming.object.Barracuda;
+import swarming.object.Fish;
 import swarming.object.FishManager;
 import swarming.math.LineareAlgebra;
 import swarming.math.Vektor2D;
@@ -60,8 +61,10 @@ public class SnapperBehavior extends FishBehavior {
     private Vektor2D panic() {
         Vektor2D panicForce = new Vektor2D();
 
-        fishManager.getFishMap().forEach((id, fish) -> {
-            if (!(fish instanceof Barracuda)) return;
+        for (int i = 1; i <= fishManager.getFishCount(); i++) {
+            Fish fish = fishManager.getFish(i);
+
+            if (fish.eaten || !(fish instanceof Barracuda)) continue;
 
             Vektor2D distance = LineareAlgebra.sub(fish.position, snapper.position);
 
@@ -69,7 +72,7 @@ public class SnapperBehavior extends FishBehavior {
                 panicForce.add(distance);
 //                speed = 2 * SPEED;
             }
-        });
+        }
 
         panicForce.normalize();
         panicForce.mult(-20);
@@ -85,10 +88,10 @@ public class SnapperBehavior extends FishBehavior {
         int counter = 1;
 
         for (int i = 1; i <= fishManager.getFishCount(); i++) {
+            Fish fish = fishManager.getFish(i);
+            if (fish.eaten || i == snapper.id || !(fish instanceof Snapper)) continue;
 
-            if (i == snapper.id || !(fishManager.getFish(i) instanceof Snapper)) continue;
-
-            Vektor2D distance = LineareAlgebra.sub(fishManager.getFish(i).position, snapper.position);
+            Vektor2D distance = LineareAlgebra.sub(fish.position, snapper.position);
 
             if (minimalDistance == null) {
                 minimalDistance = new Vektor2D(distance);
@@ -137,10 +140,11 @@ public class SnapperBehavior extends FishBehavior {
         Vektor2D minimalDistance = null;
 
         for (int i = 1; i <= fishManager.getFishCount(); i++) {
-            if (i == snapper.id || !(fishManager.getFish(i) instanceof Snapper)) continue;
+            Fish fish = fishManager.getFish(i);
+            if (fish.eaten || i == snapper.id || !(fish instanceof Snapper)) continue;
 
 
-            Vektor2D distance = LineareAlgebra.sub(fishManager.getFish(i).position, snapper.position);
+            Vektor2D distance = LineareAlgebra.sub(fish.position, snapper.position);
 
             if (minimalDistance == null) {
                 minimalDistance = new Vektor2D(distance);
@@ -177,12 +181,13 @@ public class SnapperBehavior extends FishBehavior {
         Vektor2D alignment = new Vektor2D(snapper.orientation);
 
         for (int i = 1; i <= fishManager.getFishCount(); i++) {
-            if (!(fishManager.getFish(i) instanceof Snapper)) continue;
+            Fish fish = fishManager.getFish(i);
+            if (fish.eaten || !(fish instanceof Snapper)) continue;
 
-            Vektor2D distance = LineareAlgebra.sub(fishManager.getFish(i).position, snapper.position);
+            Vektor2D distance = LineareAlgebra.sub(fish.position, snapper.position);
 
             if (LineareAlgebra.length(distance) < COHESION_RADIUS) {
-                alignment.add(fishManager.getFish(i).orientation);
+                alignment.add(fish.orientation);
             }
         }
 
@@ -195,12 +200,13 @@ public class SnapperBehavior extends FishBehavior {
         Vektor2D destination = new Vektor2D();
 
         for (int i = 1; i <= fishManager.getFishCount(); i++) {
-            if (i == snapper.id || !(fishManager.getFish(i) instanceof Snapper)) continue;
+            Fish fish = fishManager.getFish(i);
+            if (fish.eaten || i == snapper.id || !(fish instanceof Snapper)) continue;
 
-            Vektor2D distance = LineareAlgebra.sub(fishManager.getFish(i).position, snapper.position);
+            Vektor2D distance = LineareAlgebra.sub(fish.position, snapper.position);
 
             if (LineareAlgebra.length(distance) < COHESION_RADIUS) {
-                destination.add(fishManager.getFish(i).position);
+                destination.add(fish.position);
             }
 
 

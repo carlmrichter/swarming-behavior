@@ -6,6 +6,9 @@ import org.lwjgl.opengl.DisplayMode;
 
 import java.awt.*;
 
+import static org.lwjgl.opengl.GL11.GL_VERSION;
+import static org.lwjgl.opengl.GL11.glGetString;
+
 public abstract class Window {
    private int width, height;
    private String title;

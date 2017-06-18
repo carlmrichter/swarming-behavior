@@ -4,6 +4,7 @@ import org.lwjgl.Sys;
 import org.lwjgl.input.Mouse;
 import swarming.frame.Window;
 import swarming.object.Barracuda;
+import swarming.object.Fish;
 import swarming.object.Snapper;
 import swarming.object.FishManager;
 import org.lwjgl.opengl.Display;
@@ -13,7 +14,7 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class SwarmingBehavior extends Window {
 
-    private final static int SNAPPER_COUNT = 500, BARRACUDA_COUNT = 5;
+    private final static int SNAPPER_COUNT = 3, BARRACUDA_COUNT = 1;
     public static final int WIDTH = 3200;
     public static final int HEIGHT = 1800;
 
@@ -37,7 +38,7 @@ public class SwarmingBehavior extends Window {
         Random random = ThreadLocalRandom.current();
         for (int i = 1; i <= SNAPPER_COUNT; i++) {
             Snapper snapper = new Snapper(random.nextInt(WIDTH), random.nextInt(HEIGHT), random.nextInt(359));
-            snapper.setBehavior(1, 1, 30);
+            snapper.setBehavior(1, 1, 35, 300);
             fishManager.addFish(snapper);
         }
 
@@ -63,18 +64,22 @@ public class SwarmingBehavior extends Window {
             glClearColor(0.1f, 0.2f, 0.3f, 1);
             glClear(GL_COLOR_BUFFER_BIT);
 
+            fishManager.getFishMap().forEach((id, fish) -> fish.render());
 
-
-            for (int i = 1; i <= fishManager.getFishCount(); i++) {
-                fishManager.getFish(i).render();
-            }
+//            for (int i = 1; i <= fishManager.getFishCount(); i++) {
+//
+//                Fish fish = fishManager.getFish(i);
+//                if (fish == null) continue;
+//                fish.render();
+//
+//            }
 
             //handleInputs();
 
 
             updateFPS();
             Display.update();
-            //Display.sync(60);
+            Display.sync(60);
         }
 
         Display.destroy();

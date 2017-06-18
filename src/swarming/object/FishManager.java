@@ -2,6 +2,7 @@ package swarming.object;
 
 
 import java.util.HashMap;
+import java.util.Set;
 
 public class FishManager {
 
@@ -40,6 +41,10 @@ public class FishManager {
 
     public int getFishCount() {
         return fishMap.size();
+    }
+
+    public Set<Integer> getKeySet() {
+        return fishMap.keySet();
     }
 
 }

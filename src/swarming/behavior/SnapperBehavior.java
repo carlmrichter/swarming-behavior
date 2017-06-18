@@ -1,5 +1,6 @@
 package swarming.behavior;
 
+import swarming.object.Barracuda;
 import swarming.object.FishManager;
 import swarming.math.LineareAlgebra;
 import swarming.math.Vektor2D;
@@ -9,10 +10,9 @@ import swarming.object.Snapper;
 public class SnapperBehavior extends FishBehavior {
     private Snapper snapper;
 
-    private final double COMFORT_RADIUS;
-    private final static double MIN_SWARMSIZE = 10, SWARMRADIUS = 150;
-    private final double SEPARATION_STRENGTH = 10;
-    private final double COHESION_STRENGTH = 10, COHESION_RADIUS;
+    private final static double MIN_SWARMSIZE = 5, SWARMRADIUS = 150;
+    private final double SEPARATION_STRENGTH = 5, COHESION_STRENGTH = 5;
+    private final double COMFORT_RADIUS,  COHESION_RADIUS, PANIC_RADIUS;
     private final double SPEED;
 
     private Vektor2D separationForce, cohesionForce;
@@ -24,17 +24,19 @@ public class SnapperBehavior extends FishBehavior {
         this.speed = SPEED;
         this.rotationSpeed = 1;
         this.COMFORT_RADIUS = 40;
-        this.COHESION_RADIUS = this.COMFORT_RADIUS * 4;
+        this.COHESION_RADIUS = this.COMFORT_RADIUS * 3;
+        this.PANIC_RADIUS = 150;
     }
 
-    public SnapperBehavior(Snapper snapper, double speed, double rotationSpeed, double comfortRadius) {
+    public SnapperBehavior(Snapper snapper, double speed, double rotationSpeed, double comfortRadius, double panicRadius) {
         this.snapper = snapper;
         this.fishManager = FishManager.getInstance();
         this.SPEED = speed;
         this.speed = SPEED;
         this.rotationSpeed = rotationSpeed;
         this.COMFORT_RADIUS = comfortRadius;
-        this.COHESION_RADIUS = comfortRadius * 4;
+        this.COHESION_RADIUS = comfortRadius * 3;
+        this.PANIC_RADIUS = panicRadius;
     }
 
     @Override
@@ -43,14 +45,39 @@ public class SnapperBehavior extends FishBehavior {
         target = LineareAlgebra.mult(snapper.orientation, speed);
 //        target = LineareAlgebra.normalize(snapper.orientation);
 
+
+        target.add(panic());
         target.add(cohesion());
         target.add(separation());
-        rotate(alignment());
-        target.normalize();
-
+        rotate(alignment(), this.snapper);
+//        target.normalize();
+       // rotate(target);
         adjustSpeed();
         snapper.position.add(LineareAlgebra.mult(snapper.orientation, speed));
 
+    }
+
+    private Vektor2D panic() {
+        Vektor2D panicForce = new Vektor2D();
+
+        fishManager.getFishMap().forEach((id, fish) -> {
+            if (!(fish instanceof Barracuda)) return;
+
+            Vektor2D distance = LineareAlgebra.sub(fish.position, snapper.position);
+
+            if (LineareAlgebra.length(distance) < PANIC_RADIUS) {
+                panicForce.add(distance);
+//                speed = 2 * SPEED;
+            }
+        });
+
+        panicForce.normalize();
+        panicForce.mult(-20);
+
+        rotationSpeed *= 3;
+        rotate(panicForce, this.snapper);
+        rotationSpeed /= 3;
+        return panicForce;
     }
 
     private void adjustSpeed() {
@@ -73,7 +100,7 @@ public class SnapperBehavior extends FishBehavior {
             if (snapper.orientation.isNullVector() || distance.isNullVector()) continue;
 
 
-            if (distance.length() < SWARMRADIUS) {
+            if (distance.length() < COHESION_RADIUS) {
                 counter++;
             }
         }
@@ -91,7 +118,10 @@ public class SnapperBehavior extends FishBehavior {
             if (dist < COMFORT_RADIUS && angle < 90) {
                 speed = SPEED * 1.3;
             }
-            else if (dist > COMFORT_RADIUS && dist < COHESION_RADIUS && angle < 90) {
+            else if (dist > COMFORT_RADIUS && dist < COHESION_RADIUS && angle > 120) {
+                speed = SPEED * 1.3;
+            }
+            else if (dist > COMFORT_RADIUS && dist < COHESION_RADIUS && angle < 60) {
                 speed = SPEED * 1.7;
             }
             else {
@@ -133,10 +163,10 @@ public class SnapperBehavior extends FishBehavior {
             double dist = minimalDistance.length();
 
             if (dist < COMFORT_RADIUS) {
-                rotate(separationForce);
+                rotate(separationForce, this.snapper);
             }
             else if (dist < COHESION_RADIUS) {
-                rotate(cohesionForce);
+                rotate(cohesionForce, this.snapper);
             }
         }
 
@@ -181,30 +211,5 @@ public class SnapperBehavior extends FishBehavior {
         cohesionForce.normalize();
         cohesionForce.mult(COHESION_STRENGTH);
         return cohesionForce;
-    }
-
-    private void rotate(Vektor2D direction) {
-        // Winkel zwischen der aktuellen Richtung und dem Vektor
-        if (snapper.orientation.isNullVector() || direction.isNullVector()) return;
-        double angle = Math.round(LineareAlgebra.cosEquation(snapper.orientation, direction));
-
-        if (angle == 0) return;
-
-        // Richtungsbestimmung (in welche Richtung muss gedreht werden?)
-        if (LineareAlgebra.crossProduct(snapper.orientation, direction) < 0) {
-            angle *= -1;
-        }
-
-        rotateByAngle(angle);
-    }
-
-    private void rotateByAngle(double angle) {
-        if (angle == 0) return;
-
-        if (Math.abs(angle) >= rotationSpeed) {
-            snapper.orientation.rotate(rotationSpeed * (angle < 0 ? -1 : 1));
-        } else {
-            snapper.orientation.rotate(angle);
-        }
     }
 }

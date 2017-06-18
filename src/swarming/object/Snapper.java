@@ -18,8 +18,8 @@ public class Snapper extends Fish {
         this.behavior = new SnapperBehavior(this);
     }
 
-    public void setBehavior(double speed, double rotationSpeed, double comfortRadius) {
-        this.behavior = new SnapperBehavior(this, speed, rotationSpeed, comfortRadius);
+    public void setBehavior(double speed, double rotationSpeed, double comfortRadius, double panicRadius) {
+        this.behavior = new SnapperBehavior(this, speed, rotationSpeed, comfortRadius, panicRadius);
     }
 
     @Override

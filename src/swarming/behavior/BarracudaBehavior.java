@@ -7,8 +7,11 @@ import swarming.object.Barracuda;
 import swarming.object.Fish;
 import swarming.object.FishManager;
 import swarming.object.Snapper;
+import swarming.object.Shark;
 
 public class BarracudaBehavior extends FishBehavior {
+
+    private final double COMFORT_RADIUS, PANIC_RADIUS;
 
     private Barracuda barracuda;
     private final double SPEED;
@@ -20,6 +23,8 @@ public class BarracudaBehavior extends FishBehavior {
         this.SPEED = speed;
         this.speed = speed;
         this.rotationSpeed = rotationSpeed;
+        this.COMFORT_RADIUS = 50;
+        this.PANIC_RADIUS = 200;
     }
 
     @Override
@@ -27,6 +32,7 @@ public class BarracudaBehavior extends FishBehavior {
 
         target = LineareAlgebra.mult(barracuda.orientation, speed);
 
+        target.add(panic());
         target.add(seekForSnapper());
 
         rotate(target, this.barracuda);
@@ -37,8 +43,31 @@ public class BarracudaBehavior extends FishBehavior {
     private Vektor2D panic() {
         Vektor2D panicForce = new Vektor2D();
 
+        for (int i = 1; i <= fishManager.getFishCount(); i++){
+            Fish fish = fishManager.getFish(i);
 
+            if (fish.eaten || (!(fish instanceof Barracuda) &&!(fish instanceof Shark))) continue;
 
+            Vektor2D distance = LineareAlgebra.sub(fish.position, barracuda.position);
+
+            double dist = LineareAlgebra.length(distance);
+
+            if (fish instanceof Shark){
+                if (dist < PANIC_RADIUS){
+                    panicForce.add(distance);
+                }
+            } else {
+                if (dist < COMFORT_RADIUS){
+                    panicForce.add(distance);
+                }
+            }
+
+        }
+        panicForce.normalize();
+        panicForce.mult(-20);
+        rotationSpeed *= 3;
+        rotate(panicForce, this.barracuda);
+        rotationSpeed /= 3;
         return panicForce;
     }
 

@@ -2,11 +2,9 @@ package swarming;
 
 import org.lwjgl.Sys;
 import org.lwjgl.input.Mouse;
+import swarming.behavior.BarracudaBehavior;
 import swarming.frame.Window;
-import swarming.object.Barracuda;
-import swarming.object.Fish;
-import swarming.object.Snapper;
-import swarming.object.FishManager;
+import swarming.object.*;
 import org.lwjgl.opengl.Display;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -14,9 +12,8 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class SwarmingBehavior extends Window {
 
-    private final static int SNAPPER_COUNT = 300, BARRACUDA_COUNT = 2;
-    public static final int WIDTH = 3200;
-    public static final int HEIGHT = 1800;
+    private final static int SNAPPER_COUNT = 300, BARRACUDA_COUNT = 2, SHARK_COUNT = 0;
+    public static final int WIDTH = 1600, HEIGHT = 900;
 
     private FishManager fishManager;
 
@@ -36,16 +33,22 @@ public class SwarmingBehavior extends Window {
         fishManager = FishManager.getInstance();
 
         Random random = ThreadLocalRandom.current();
-        for (int i = 1; i <= SNAPPER_COUNT; i++) {
+        for (int i = 0; i < SNAPPER_COUNT; i++) {
             Snapper snapper = new Snapper(random.nextInt(WIDTH), random.nextInt(HEIGHT), random.nextInt(359));
             snapper.setBehavior(1, 1, 35, 300);
             fishManager.addFish(snapper);
         }
 
-        for (int i = 1; i <= BARRACUDA_COUNT; i++) {
+        for (int i = 0; i < BARRACUDA_COUNT; i++) {
             Barracuda barracuda = new Barracuda(random.nextInt(WIDTH), random.nextInt(HEIGHT), random.nextInt(359));
-            barracuda.setBehavior(3, 2);
+            barracuda.setBehavior(2, 1);
             fishManager.addFish(barracuda);
+        }
+
+        for (int i = 0; i < SHARK_COUNT; i++) {
+            Shark shark = new Shark(random.nextInt(WIDTH), random.nextInt(HEIGHT), random.nextInt(359));
+            shark.setBehavior(3, 1);
+            fishManager.addFish(shark);
         }
     }
 
@@ -134,7 +137,8 @@ public class SwarmingBehavior extends Window {
      */
     public void updateFPS() {
         if (getTime() - lastFPS > 1000) {
-            Display.setTitle("FPS: " + fps);
+            Display.setTitle("FPS: " + fps + " | Snappers: " + Snapper.snapperCount
+                    + " | Barracudas: " + Barracuda.barracudaCount + " | Sharks: " + SHARK_COUNT);
             fps = 0;
             lastFPS += 1000;
         }

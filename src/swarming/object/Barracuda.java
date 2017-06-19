@@ -1,7 +1,6 @@
 package swarming.object;
 
 import swarming.behavior.BarracudaBehavior;
-import swarming.behavior.Behavior;
 import swarming.math.LineareAlgebra;
 import swarming.math.Vektor2D;
 
@@ -11,14 +10,12 @@ import static org.lwjgl.opengl.GL11.glVertex2d;
 
 public class Barracuda extends Fish {
 
+    public static int barracudaCount = 0;
+
     public Barracuda(double x, double y, double orientationAngle) {
         super(x, y, orientationAngle);
+        barracudaCount++;
 
-    }
-
-    @Override
-    public void setBehavior(Behavior behavior) {
-        this.behavior = new BarracudaBehavior(this);
     }
 
     public void setBehavior(double speed, double rotationSpeed) {

@@ -1,11 +1,8 @@
 package swarming.behavior;
 
-import swarming.object.Barracuda;
-import swarming.object.Fish;
-import swarming.object.FishManager;
+import swarming.object.*;
 import swarming.math.LineareAlgebra;
 import swarming.math.Vektor2D;
-import swarming.object.Snapper;
 
 
 public class SnapperBehavior extends FishBehavior {
@@ -50,9 +47,10 @@ public class SnapperBehavior extends FishBehavior {
         target.add(panic());
         target.add(cohesion());
         target.add(separation());
+        target.add(alignment());
         rotate(alignment(), this.snapper);
 //        target.normalize();
-       // rotate(target);
+        //rotate(target, snapper);
         adjustSpeed();
         snapper.position.add(LineareAlgebra.mult(snapper.orientation, speed));
 
@@ -64,7 +62,7 @@ public class SnapperBehavior extends FishBehavior {
         for (int i = 1; i <= fishManager.getFishCount(); i++) {
             Fish fish = fishManager.getFish(i);
 
-            if (fish.eaten || !(fish instanceof Barracuda)) continue;
+            if (fish.eaten || (!(fish instanceof Barracuda) && !(fish instanceof Shark))) continue;
 
             Vektor2D distance = LineareAlgebra.sub(fish.position, snapper.position);
 

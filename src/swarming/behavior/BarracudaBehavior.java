@@ -1,6 +1,7 @@
 package swarming.behavior;
 
 import org.lwjgl.opengl.Display;
+import swarming.SwarmingBehavior;
 import swarming.math.LineareAlgebra;
 import swarming.math.Vektor2D;
 import swarming.object.Barracuda;
@@ -23,8 +24,8 @@ public class BarracudaBehavior extends FishBehavior {
         this.SPEED = speed;
         this.speed = speed;
         this.rotationSpeed = rotationSpeed;
-        this.COMFORT_RADIUS = 50;
-        this.PANIC_RADIUS = 200;
+        this.COMFORT_RADIUS = 50 * SwarmingBehavior.scaling;
+        this.PANIC_RADIUS = 200 * SwarmingBehavior.scaling;
     }
 
     @Override

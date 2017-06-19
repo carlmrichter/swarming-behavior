@@ -12,6 +12,7 @@ import static org.lwjgl.opengl.GL11.glVertex2d;
 public class Snapper extends Fish {
 
     public static int snapperCount = 0;
+    private static float LENGTH = 15 * SwarmingBehavior.scaling, WIDTH = 10 * SwarmingBehavior.scaling;
 
     public Snapper(double x, double y, double orientationAngle){
         super(x, y, orientationAngle);
@@ -27,11 +28,11 @@ public class Snapper extends Fish {
         update();
         transformCoordinates();
 
-        point1 = LineareAlgebra.add(position, LineareAlgebra.mult(orientation, 15 * SwarmingBehavior.scaling));
-        point2 = LineareAlgebra.sub(position, LineareAlgebra.mult(orientation, 15 * SwarmingBehavior.scaling));
+        point1 = LineareAlgebra.add(position, LineareAlgebra.mult(orientation, LENGTH));
+        point2 = LineareAlgebra.sub(position, LineareAlgebra.mult(orientation, LENGTH));
         point3 = new Vektor2D(point2);
-        point2.add(LineareAlgebra.mult(new Vektor2D(-orientation.y, orientation.x), 10 * SwarmingBehavior.scaling));
-        point3.add(LineareAlgebra.mult(new Vektor2D(orientation.y, -orientation.x), 10 * SwarmingBehavior.scaling));
+        point2.add(LineareAlgebra.mult(new Vektor2D(-orientation.y, orientation.x), WIDTH));
+        point3.add(LineareAlgebra.mult(new Vektor2D(orientation.y, -orientation.x), WIDTH));
 
         glColor3d(1, 1, 0);
         glBegin(GL_TRIANGLES);

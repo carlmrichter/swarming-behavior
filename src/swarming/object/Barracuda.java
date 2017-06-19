@@ -11,12 +11,12 @@ import static org.lwjgl.opengl.GL11.glVertex2d;
 
 public class Barracuda extends Fish {
 
+    private static float LENGTH = 25 * SwarmingBehavior.scaling, WIDTH = 15 * SwarmingBehavior.scaling;
     public static int barracudaCount = 0;
 
     public Barracuda(double x, double y, double orientationAngle) {
         super(x, y, orientationAngle);
         barracudaCount++;
-
     }
 
     public void setBehavior(double speed, double rotationSpeed) {
@@ -28,11 +28,11 @@ public class Barracuda extends Fish {
         update();
         transformCoordinates();
 
-        Vektor2D point1 = LineareAlgebra.add(position, LineareAlgebra.mult(orientation, 25 * SwarmingBehavior.scaling));
-        Vektor2D point2 = LineareAlgebra.sub(position, LineareAlgebra.mult(orientation, 25 * SwarmingBehavior.scaling));
+        Vektor2D point1 = LineareAlgebra.add(position, LineareAlgebra.mult(orientation, LENGTH));
+        Vektor2D point2 = LineareAlgebra.sub(position, LineareAlgebra.mult(orientation, LENGTH));
         Vektor2D point3 = new Vektor2D(point2);
-        point2.add(LineareAlgebra.mult(new Vektor2D(-orientation.y, orientation.x), 15 * SwarmingBehavior.scaling));
-        point3.add(LineareAlgebra.mult(new Vektor2D(orientation.y, -orientation.x), 15 * SwarmingBehavior.scaling));
+        point2.add(LineareAlgebra.mult(new Vektor2D(-orientation.y, orientation.x), WIDTH));
+        point3.add(LineareAlgebra.mult(new Vektor2D(orientation.y, -orientation.x), WIDTH));
 
         glColor3d(1, 0.5, 1);
         glBegin(GL_TRIANGLES);

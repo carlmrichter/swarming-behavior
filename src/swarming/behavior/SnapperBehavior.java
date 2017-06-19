@@ -1,5 +1,6 @@
 package swarming.behavior;
 
+import swarming.SwarmingBehavior;
 import swarming.object.*;
 import swarming.math.LineareAlgebra;
 import swarming.math.Vektor2D;
@@ -8,23 +9,12 @@ import swarming.math.Vektor2D;
 public class SnapperBehavior extends FishBehavior {
     private Snapper snapper;
 
-    private final static double MIN_SWARMSIZE = 5, SWARMRADIUS = 150;
+    private final static double MIN_SWARMSIZE = 5, SWARMRADIUS = 150  * SwarmingBehavior.scaling;
     private final double SEPARATION_STRENGTH = 5, COHESION_STRENGTH = 5;
     private final double COMFORT_RADIUS,  COHESION_RADIUS, PANIC_RADIUS;
     private final double SPEED;
 
     private Vektor2D separationForce, cohesionForce;
-
-    public SnapperBehavior(Snapper snapper) {
-        this.snapper = snapper;
-        this.fishManager = FishManager.getInstance();
-        this.SPEED = 1;
-        this.speed = SPEED;
-        this.rotationSpeed = 1;
-        this.COMFORT_RADIUS = 40;
-        this.COHESION_RADIUS = this.COMFORT_RADIUS * 3;
-        this.PANIC_RADIUS = 150;
-    }
 
     public SnapperBehavior(Snapper snapper, double speed, double rotationSpeed, double comfortRadius, double panicRadius) {
         this.snapper = snapper;
@@ -32,9 +22,9 @@ public class SnapperBehavior extends FishBehavior {
         this.SPEED = speed;
         this.speed = SPEED;
         this.rotationSpeed = rotationSpeed;
-        this.COMFORT_RADIUS = comfortRadius;
-        this.COHESION_RADIUS = comfortRadius * 3;
-        this.PANIC_RADIUS = panicRadius;
+        this.COMFORT_RADIUS = comfortRadius  * SwarmingBehavior.scaling;
+        this.COHESION_RADIUS = comfortRadius * 3  * SwarmingBehavior.scaling;
+        this.PANIC_RADIUS = panicRadius  * SwarmingBehavior.scaling;
     }
 
     @Override

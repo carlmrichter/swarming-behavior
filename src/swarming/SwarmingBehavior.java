@@ -12,7 +12,7 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class SwarmingBehavior extends Window {
 
-    private final static int SNAPPER_COUNT = 300, BARRACUDA_COUNT = 2, SHARK_COUNT = 0;
+    private final static int SNAPPER_COUNT = 300, BARRACUDA_COUNT = 2, SHARK_COUNT = 1;
     public static final int WIDTH = 1600, HEIGHT = 900;
 
     private FishManager fishManager;
@@ -81,7 +81,7 @@ public class SwarmingBehavior extends Window {
 //
 //            }
 
-            //handleInputs();
+            handleInputs();
 
 
             updateFPS();

@@ -1,5 +1,8 @@
 package swarming.behavior;
 
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
+import swarming.SwarmingBehavior;
 import swarming.math.LineareAlgebra;
 import swarming.math.Vektor2D;
 import swarming.object.*;
@@ -18,17 +21,23 @@ public class SharkBehavior extends FishBehavior {
 
     @Override
     public void update() {
-        target = LineareAlgebra.mult(shark.orientation, speed);
 
-        target.add(seekForFood());
-
-        rotate(target, this.shark);
+        handleInputs();
+        seekForFood();
         shark.position.add(LineareAlgebra.mult(shark.orientation, speed));
     }
 
+    private void handleInputs() {
+        if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
+            rotateByAngle(-1, this.shark);
+        }
+        if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
+            rotateByAngle(1, this.shark);
+        }
 
-    private Vektor2D seekForFood() {
-        Vektor2D seekForce = new Vektor2D();
+    }
+
+    private void seekForFood() {
 
         for (int i = 1; i < fishManager.getFishCount(); i++) {
             Fish fish = fishManager.getFish(i);
@@ -40,10 +49,6 @@ public class SharkBehavior extends FishBehavior {
             double dist = distance.length();
 
             if (dist < SEEK_RADIUS) {
-                double angle = LineareAlgebra.cosEquation(distance, shark.orientation);
-                if (angle < 90) {
-                    seekForce.add(distance);
-                }
                 if (dist < 30) {
                     fish.eaten = true;
                     if (fish instanceof Snapper) Snapper.snapperCount--;
@@ -51,8 +56,5 @@ public class SharkBehavior extends FishBehavior {
                 }
             }
         }
-
-        seekForce.mult(10);
-        return seekForce;
     }
 }

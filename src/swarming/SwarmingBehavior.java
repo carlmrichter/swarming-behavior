@@ -14,8 +14,8 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class SwarmingBehavior extends Window {
 
-    private final static int SNAPPER_COUNT = 300, BARRACUDA_COUNT = 2, SHARK_COUNT = 1;
-    public static final int WIDTH = 1600, HEIGHT = 900;
+    private final static int SNAPPER_COUNT = 500, BARRACUDA_COUNT = 2, SHARK_COUNT = 1;
+    public static int WIDTH = 1600, HEIGHT = 900;
     public static float scaling;
 
     private FishManager fishManager;
@@ -34,9 +34,8 @@ public class SwarmingBehavior extends Window {
         initDisplay(NORMAL);
 
         float dpi = Toolkit.getDefaultToolkit().getScreenResolution();
-        System.out.println("DPI: " + dpi);
-        scaling = dpi / 200;
-
+        scaling = dpi / 160;
+        System.out.println("DPI: " + dpi + " Scaling: " + scaling + " Scaling 2:" + Display.getPixelScaleFactor());
         fishManager = FishManager.getInstance();
 
         Random random = ThreadLocalRandom.current();
@@ -87,7 +86,7 @@ public class SwarmingBehavior extends Window {
 
             updateFPS();
             Display.update();
-            Display.sync(60);
+            Display.sync(65);
         }
 
         Display.destroy();

@@ -6,6 +6,8 @@ import swarming.behavior.BarracudaBehavior;
 import swarming.frame.Window;
 import swarming.object.*;
 import org.lwjgl.opengl.Display;
+
+import java.awt.*;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import static org.lwjgl.opengl.GL11.*;
@@ -28,8 +30,9 @@ public class SwarmingBehavior extends Window {
 
     public SwarmingBehavior() {
         super("Swarming behavior", WIDTH, HEIGHT);
-        initDisplay();
-
+        initDisplay(NORMAL);
+        float dpi = Toolkit.getDefaultToolkit().getScreenResolution();
+        System.out.println(dpi);
         fishManager = FishManager.getInstance();
 
         Random random = ThreadLocalRandom.current();
@@ -54,6 +57,8 @@ public class SwarmingBehavior extends Window {
 
     @Override
     public void renderLoop() {
+
+
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         glOrtho (0, WIDTH, HEIGHT, 0, 0, 1);

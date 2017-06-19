@@ -12,6 +12,7 @@ import static org.lwjgl.opengl.GL11.glGetString;
 public abstract class Window {
    private int width, height;
    private String title;
+   public static final int NORMAL = 0, MAXIMIZED = 1, FULLSCREEN = 2;
    
    public Window() {
       this("Window", 640, 480);
@@ -23,11 +24,22 @@ public abstract class Window {
       this.title  = title;
    }
    
-   public void initDisplay() {
+   public void initDisplay(int windowMode) {
       try {
-         Display.setDisplayMode(new DisplayMode(getWidth(), getHeight()));
-         Display.setTitle(title);
-         Display.create();
+        if (windowMode < 0 || windowMode > 2) windowMode = NORMAL;
+        switch (windowMode) {
+            case NORMAL:
+                Display.setDisplayMode(new DisplayMode(width, height));
+                break;
+            case MAXIMIZED:
+                Display.setDisplayMode(Display.getDesktopDisplayMode());
+                break;
+            case FULLSCREEN:
+                Display.setDisplayModeAndFullscreen(Display.getDesktopDisplayMode());
+                break;
+        }
+        Display.setTitle(title);
+        Display.create();
       } catch (LWJGLException e) {
          e.printStackTrace();
       }      
@@ -39,7 +51,7 @@ public abstract class Window {
        } catch (LWJGLException e) {
            e.printStackTrace();
        }
-       initDisplay();
+       initDisplay(NORMAL);
    }
    
    public abstract void renderLoop();

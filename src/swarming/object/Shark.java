@@ -29,7 +29,7 @@ public class Shark extends Fish {
         point2.add(LineareAlgebra.mult(new Vektor2D(-orientation.y, orientation.x), 20));
         point3.add(LineareAlgebra.mult(new Vektor2D(orientation.y, -orientation.x), 20));
 
-        glColor3d(0, 0, 1);
+        glColor3d(1, 1, 1);
         glBegin(GL_TRIANGLES);
         glVertex2d(point1.x, point1.y);
         glVertex2d(point2.x, point2.y);

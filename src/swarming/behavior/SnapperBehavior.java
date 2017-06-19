@@ -19,9 +19,8 @@ public class SnapperBehavior extends FishBehavior {
     public SnapperBehavior(Snapper snapper, double speed, double rotationSpeed, double comfortRadius, double panicRadius) {
         this.snapper = snapper;
         this.fishManager = FishManager.getInstance();
-        this.SPEED = speed;
-        this.speed = SPEED;
-        this.rotationSpeed = rotationSpeed;
+        this.SPEED = this.speed = speed * SwarmingBehavior.scaling;
+        this.rotationSpeed = rotationSpeed * SwarmingBehavior.scaling;
         this.COMFORT_RADIUS = comfortRadius  * SwarmingBehavior.scaling;
         this.COHESION_RADIUS = comfortRadius * 3  * SwarmingBehavior.scaling;
         this.PANIC_RADIUS = panicRadius  * SwarmingBehavior.scaling;

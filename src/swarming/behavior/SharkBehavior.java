@@ -1,7 +1,6 @@
 package swarming.behavior;
 
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
 import swarming.SwarmingBehavior;
 import swarming.math.LineareAlgebra;
 import swarming.math.Vektor2D;
@@ -10,13 +9,13 @@ import swarming.object.*;
 public class SharkBehavior extends FishBehavior {
 
     private Shark shark;
-    private final double SPEED, SEEK_RADIUS = 300;
+    private final double SPEED, SEEK_RADIUS = 300  * SwarmingBehavior.scaling;
 
     public SharkBehavior(Shark shark, double speed, double rotationSpeed) {
         this.shark = shark;
-        this.speed = SPEED = speed;
+        this.speed = SPEED = speed * SwarmingBehavior.scaling;
         this.fishManager = FishManager.getInstance();
-        this.rotationSpeed = rotationSpeed;
+        this.rotationSpeed = rotationSpeed * SwarmingBehavior.scaling;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package swarming.behavior;
 
-import org.lwjgl.opengl.Display;
 import swarming.SwarmingBehavior;
 import swarming.math.LineareAlgebra;
 import swarming.math.Vektor2D;
@@ -21,9 +20,8 @@ public class BarracudaBehavior extends FishBehavior {
     public BarracudaBehavior(Barracuda barracuda, double speed, double rotationSpeed) {
         this.barracuda = barracuda;
         this.fishManager = FishManager.getInstance();
-        this.SPEED = speed;
-        this.speed = speed;
-        this.rotationSpeed = rotationSpeed;
+        this.SPEED = this.speed = speed * SwarmingBehavior.scaling;
+        this.rotationSpeed = rotationSpeed * SwarmingBehavior.scaling;
         this.COMFORT_RADIUS = 50 * SwarmingBehavior.scaling;
         this.PANIC_RADIUS = 200 * SwarmingBehavior.scaling;
     }

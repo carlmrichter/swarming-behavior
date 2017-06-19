@@ -1,5 +1,6 @@
 package swarming.object;
 
+import swarming.SwarmingBehavior;
 import swarming.behavior.SnapperBehavior;
 import swarming.math.LineareAlgebra;
 import swarming.math.Vektor2D;
@@ -26,11 +27,11 @@ public class Snapper extends Fish {
         update();
         transformCoordinates();
 
-        point1 = LineareAlgebra.add(position, LineareAlgebra.mult(orientation, 15));
-        point2 = LineareAlgebra.sub(position, LineareAlgebra.mult(orientation, 15));
+        point1 = LineareAlgebra.add(position, LineareAlgebra.mult(orientation, 15 * SwarmingBehavior.scaling));
+        point2 = LineareAlgebra.sub(position, LineareAlgebra.mult(orientation, 15 * SwarmingBehavior.scaling));
         point3 = new Vektor2D(point2);
-        point2.add(LineareAlgebra.mult(new Vektor2D(-orientation.y, orientation.x), 10));
-        point3.add(LineareAlgebra.mult(new Vektor2D(orientation.y, -orientation.x), 10));
+        point2.add(LineareAlgebra.mult(new Vektor2D(-orientation.y, orientation.x), 10 * SwarmingBehavior.scaling));
+        point3.add(LineareAlgebra.mult(new Vektor2D(orientation.y, -orientation.x), 10 * SwarmingBehavior.scaling));
 
         glColor3d(1, 1, 0);
         glBegin(GL_TRIANGLES);

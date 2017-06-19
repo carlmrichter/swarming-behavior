@@ -16,6 +16,7 @@ public class SwarmingBehavior extends Window {
 
     private final static int SNAPPER_COUNT = 300, BARRACUDA_COUNT = 2, SHARK_COUNT = 1;
     public static final int WIDTH = 1600, HEIGHT = 900;
+    public static float scaling;
 
     private FishManager fishManager;
 
@@ -31,8 +32,11 @@ public class SwarmingBehavior extends Window {
     public SwarmingBehavior() {
         super("Swarming behavior", WIDTH, HEIGHT);
         initDisplay(NORMAL);
+
         float dpi = Toolkit.getDefaultToolkit().getScreenResolution();
-        System.out.println(dpi);
+        System.out.println("DPI: " + dpi);
+        scaling = dpi / 200;
+
         fishManager = FishManager.getInstance();
 
         Random random = ThreadLocalRandom.current();
@@ -78,16 +82,8 @@ public class SwarmingBehavior extends Window {
                 }
             });
 
-//            for (int i = 1; i <= fishManager.getFishCount(); i++) {
-//
-//                Fish fish = fishManager.getFish(i);
-//                if (fish == null) continue;
-//                fish.render();
-//
-//            }
 
             handleInputs();
-
 
             updateFPS();
             Display.update();

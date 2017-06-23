@@ -1,0 +1,134 @@
+\documentclass[11pt]{article}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{verbatim}
+\usepackage{listings}
+\usepackage{color}
+\usepackage[T1]{fontenc}
+\usepackage[tbtags, sumlimits, intlimits, namelimits]{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage{amsmath}
+\usepackage{cite} 
+% Seitenränder
+\usepackage[paper=a4paper,left=25mm,right=25mm,top=25mm,bottom=25mm]{geometry}
+% Farben
+\definecolor{javared}{rgb}{0.6,0,0} % for strings
+\definecolor{javagreen}{rgb}{0.25,0.5,0.35} % comments
+\definecolor{javapurple}{rgb}{0.5,0,0.35} % keywords
+\definecolor{javadocblue}{rgb}{0.25,0.35,0.75} % javadoc
+\definecolor{ruleColor}{rgb}{0.9,0.9,0.9}
+\lstset{language=Java,
+basicstyle=\ttfamily,
+keywordstyle=\color{javapurple}\bfseries,
+stringstyle=\color{javared},
+commentstyle=\color{javagreen},
+morecomment=[s][\color{javadocblue}]{/**}{*/},
+numbers=left,
+numberstyle=\tiny\color{black},
+stepnumber=1,
+numbersep=10pt,
+tabsize=4,
+showspaces=false,
+showstringspaces=false}
+% absätze
+\setlength{\parindent}{0pt}
+
+\title{\textbf{Computergrafik II - Prüfungsvorleistung}\\Teil 2\\Visualisierung von Schwarmverhalten am Beispiel von Schnappern, Barrakudas und Haien mit OpenGL und Java}
+\date{\today}
+\author{Carl Richter\\
+		Tobias Mayerhanser\\
+		Silvan Gümüsdere}
+
+\begin{document}
+
+
+\maketitle
+\newpage
+\tableofcontents
+\newpage
+\section{Abstract}
+Die vorliegende Arbeit dokumentiert die Visualisierung eines Schwarmverhalten von Raub- und Friedfischen im Meer. Als exemplarische Beispiele hierfür werden Rote Schnapper, Barrakudas und Haie als grafische Primitive dargestellt. Die Überlegungen basieren auf Craig Reynolds drei großen Regeln: Separation, Ausrichtung und Kohäsion. Umgesetzt ist dieses Projekt in Java und OpenGL und enstand im Rahmen der Veranstaltung 'Computergrafik/Visualisierung II' an der HTW Dresden bei Professor Block-Berlitz.
+\section{Schwarmverhalten}
+Eine Vielzahl von Lebewesen halten sich in unserer Natur in großen Schwärmen auf. Meist gehören alle Mitglieder einer Aggregation der gleichen Art an. Typische Schwarmtiere sind Ameisen, Fische oder Vögel. Die Schwarmbildung hat für die Tiere große Vorteile: Gemeinsame Nahrungssuche, Schutz vor möglichen Fressfeinden und schnellere Fortbewegung.\\
+1986 veröffentlichte Craig Reynolds, Boids: Das erste, am Computeram Computer modellierte Schwarmverhalten. Reynolds Prinzip basiert auf 3 Regeln:
+\begin{itemize}
+	\item \textbf{Kohäsion:} Bewege dich in Richtung des Mittelpunkts derer, die du in deinem Umfeld siehst.
+	\item \textbf{Separation:} Bewege dich weg, sobald dir jemand zu nahme kommt.
+	\item \textbf{Alignment:} Bewege dich in etwa in dieselbe Richtung wie deine Nachbarn.
+\end{itemize}
+Dieses Prinzip lässt sich grob auf die meisten Schwärme übertragen.
+\section{Fiktiver Schwarm}
+Zur visualisierung eines Schwarmverhaltens entschieden wir uns für einen Salzwasserfischschwarm, bestehend aus Roten Schnappern, die gemeinsam in Schwärmen durch das Wasser schwimmen und sich von Plankton ernähren, Barrakudas die als Einzelgänger jagt auf kleinere Fische machen (hier Schnapper) und ein Hai, welcher sowohl Schnapper als auch Barrakudas frisst.
+\section{Eigenschaften und Verhalten der Tiere}
+Jede Tierart hat in der Natur eine Vielzahl verschiedener Verhaltensmuster und Eigenschaften, welche die Lebewesen charakteristisch Formen. Dazu zählen beispielsweise der Körperbau, Höchstgeschwindigkeit, Sichtweite und Intelligenz. In unserer Simulation können wir viele dieser Einflussfaktoren nachbilden.
+So besitz jeder Fisch eine Höchstgeschwindigkeit in Bewegungsrichtung und eine maximale Drehgeschwindkeit um die eigene Achse. Diese Werte sind abhängig von der Masse in Abhängigkeit zum Bezugssystem.\\
+Zusätzlich hat jeder Fisch eine bestimmte Sehstärke um eigene und fremde Artgenossen für Kollisionsvermeidung, Schwarmbildung und Lebensgefahr zu erkennen.
+\newpage
+\subsection{Schnapper}
+Ein Schnapper wird im virtuellen Meer Welt mit folgenden Konstanten instanziiert, falls nicht anders angegeben sind alle Werte Verhältnissangaben. \\\\
+\begin{tabular}{|l|l|}
+\hline
+	\textbf{Eigenschaft} & \textbf{Wert}\\
+\hline
+\hline
+	\lstinline[]$MIN_SWARMSIZE$  & 5\\
+\hline
+	\lstinline[]$SWARMRADIUS$ & 150 px\\
+\hline
+	\lstinline[]$SEPARATION_STRENGTH$ & 5\\
+\hline
+	\lstinline[]$COHESION_STRENGTH$ & 5\\
+\hline
+	\lstinline[]$COMFORT_RADIUS$ & 35 px\\
+\hline
+	\lstinline[]$COHESION_RADIUS$ & 105 px\\
+\hline
+	\lstinline[]$PANIC_RADIUS$ & 300 px\\
+\hline
+	\lstinline[]$SPEED$ & 1\\
+\hline
+	\lstinline[]$ROTATION_SPEED$ & 1\\
+\hline
+\end{tabular}
+
+\subsubsection{Schwarmverhalten}
+Eine Ansammlung von wenigstens fünf Fischen im 150px Radius gilt in dieser Simulation als Schwarm. Diese Fische erhalten durch ihren Schwarm einen Geschwindigkeitsbonus um die \( 1 \frac{1}{2} \)-fache Geschwindigkeit.
+Kommt ein feindlicher Fisch zu nahe, brechen die Fische den Schwarm auf und versuchen zu fliehen. Ist ein Fisch alleine unterwegs, schwimmt er so lange in die gleiche Richtung bis er einen Verband von Artgenossen findet und sich diesen anschließt.
+
+\subsection{Barrakuda}
+Barrakudas sind exzellente Jäger. Sie treten bei der Jagt als Einzelgänger auf. Das bedeutet für die Simulation, dass auf Alignment und Kohäsion verzichtet werden kann. Es wird nur auf Separation zwischen den Barrakudas geachtet, damit die Fische kein fremdes Jagtrevier eines Artgenossen betreten.\\
+
+\begin{tabular}{|l|l|}
+\hline
+	\textbf{Eigenschaft} & \textbf{Wert}\\
+\hline
+\hline
+	\lstinline[]$SEEK_RADIUS$  & 200 px\\
+\hline
+	\lstinline[]$COMFORT_RADIUS$ & 50 px\\
+\hline
+	\lstinline[]$PANIC_RADIUS$ & 200 px\\
+\hline
+	\lstinline[]$SPEED$ & 2\\
+\hline
+	\lstinline[]$ROTATION_SPEED$ & 1\\
+\hline
+\end{tabular}
+
+\subsection{Hai}
+Der Hai ist in den Weltmeeren an der Spitze der Nahrungskette. Auch in dieser Simulation kann der Hai als einziges fiktives Lebewesen sowohl Schnapper als auch Barrakuda fressen. Der Hai ist durch seine riesige Schwanzflosse viel schneller in der Vorwärtsbewegung als alle anderen Fische. Durch seine Größe ist er aber in seiner Rotationsgeschwindigkeit nicht überlegen. Der Knorpelfisch ist in der Simulation ein einsamer Einzelgänger ohne Artgenossen. Er lässt sich über die Pfeiltasten auf der Tastatur steuern.\\
+
+\begin{tabular}{|l|l|}
+\hline
+	\textbf{Eigenschaft} & \textbf{Wert}\\
+\hline
+\hline
+	\lstinline[]$SPEED$ & 3\\
+\hline
+	\lstinline[]$ROTATION_SPEED$ & 1\\
+\hline
+\end{tabular}
+
+\end{document}

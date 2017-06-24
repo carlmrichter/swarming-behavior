@@ -37,9 +37,9 @@ public class SnapperBehavior extends FishBehavior {
         target.add(cohesion());
         target.add(separation());
         target.add(alignment());
-        rotate(alignment(), this.snapper);
+        rotateToDirection(alignment(), this.snapper);
 //        target.normalize();
-        //rotate(target, snapper);
+        //rotateToDirection(target, snapper);
         adjustSpeed();
         snapper.position.add(LineareAlgebra.mult(snapper.orientation, speed));
 
@@ -47,7 +47,6 @@ public class SnapperBehavior extends FishBehavior {
 
     private Vektor2D panic() {
         Vektor2D panicForce = new Vektor2D();
-
         for (int i = 1; i <= fishManager.getFishCount(); i++) {
             Fish fish = fishManager.getFish(i);
 
@@ -65,7 +64,7 @@ public class SnapperBehavior extends FishBehavior {
         panicForce.mult(-20);
 
         rotationSpeed *= 3;
-        rotate(panicForce, this.snapper);
+        rotateToDirection(panicForce, this.snapper);
         rotationSpeed /= 3;
         return panicForce;
     }
@@ -154,10 +153,10 @@ public class SnapperBehavior extends FishBehavior {
             double dist = minimalDistance.length();
 
             if (dist < COMFORT_RADIUS) {
-                rotate(separationForce, this.snapper);
+                rotateToDirection(separationForce, this.snapper);
             }
             else if (dist < COHESION_RADIUS) {
-                rotate(cohesionForce, this.snapper);
+                rotateToDirection(cohesionForce, this.snapper);
             }
         }
 

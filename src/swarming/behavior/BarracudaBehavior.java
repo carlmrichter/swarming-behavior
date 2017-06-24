@@ -34,7 +34,7 @@ public class BarracudaBehavior extends FishBehavior {
         target.add(panic());
         target.add(seekForSnapper());
 
-        rotate(target, this.barracuda);
+        rotateToDirection(target, this.barracuda);
         barracuda.position.add(LineareAlgebra.mult(barracuda.orientation, speed));
     }
 
@@ -65,7 +65,7 @@ public class BarracudaBehavior extends FishBehavior {
         panicForce.normalize();
         panicForce.mult(-20);
         rotationSpeed *= 3;
-        rotate(panicForce, this.barracuda);
+        rotateToDirection(panicForce, this.barracuda);
         rotationSpeed /= 3;
         return panicForce;
     }

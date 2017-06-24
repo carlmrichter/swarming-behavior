@@ -12,7 +12,7 @@ abstract class FishBehavior implements Behavior {
     protected double rotationSpeed;
     protected Vektor2D target;
 
-    protected void rotate(Vektor2D direction, Fish fish) {
+    protected void rotateToDirection(Vektor2D direction, Fish fish) {
         // Winkel zwischen der aktuellen Richtung und dem Vektor
         if (fish.orientation.isNullVector() || direction.isNullVector()) return;
         double angle = Math.round(LineareAlgebra.cosEquation(fish.orientation, direction));

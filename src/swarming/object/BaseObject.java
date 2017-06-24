@@ -38,4 +38,8 @@ public abstract class BaseObject {
             position.y = BORDER_BOTTOM;
         }
     }
+
+    public static void resetCounter() {
+        counter = 0;
+    }
 }

@@ -3,6 +3,7 @@ package swarming.frame;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.opengl.GLContext;
 
 import java.awt.*;
 
@@ -27,14 +28,20 @@ public abstract class Window {
    public void initDisplay(int windowMode) {
       try {
         if (windowMode < 0 || windowMode > 2) windowMode = NORMAL;
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        System.out.println("Screen Size: " + (int)screenSize.getWidth() + "x" + (int)screenSize.getHeight());
         switch (windowMode) {
             case NORMAL:
                 Display.setDisplayMode(new DisplayMode(width, height));
                 break;
             case MAXIMIZED:
+                setWidth((int)screenSize.getWidth());
+                setHeight((int)screenSize.getHeight());
                 Display.setDisplayMode(Display.getDesktopDisplayMode());
                 break;
             case FULLSCREEN:
+                setWidth((int)screenSize.getWidth());
+                setHeight((int)screenSize.getHeight());
                 Display.setDisplayModeAndFullscreen(Display.getDesktopDisplayMode());
                 break;
         }
@@ -55,12 +62,7 @@ public abstract class Window {
    }
    
    public abstract void renderLoop();
-   
-   public void start() {
-      renderLoop();
-      Display.destroy();
-      System.exit(0);
-   }
+
 
    public int getWidth() {
       return width;
@@ -77,5 +79,11 @@ public abstract class Window {
    public void setHeight(int height) {
       this.height = height;
    }
+
+    public void start() {
+       renderLoop();
+       Display.destroy();
+
+    }
 }
 

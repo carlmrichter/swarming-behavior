@@ -35,6 +35,17 @@ public class FishManager {
         fishMap.remove(id);
     }
 
+    public void removeAll() {
+        int count = getFishCount();
+        for (int i = 1; i <= count; i++) {
+            removeFish(i);
+        }
+        Snapper.snapperCount = 0;
+        Barracuda.barracudaCount = 0;
+        Shark.sharkCount = 0;
+        BaseObject.resetCounter();
+    }
+
     public HashMap<Integer, Fish> getFishMap() {
         return fishMap;
     }

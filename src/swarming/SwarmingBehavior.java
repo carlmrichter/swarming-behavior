@@ -14,7 +14,6 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class SwarmingBehavior extends Window {
 
-    private final static int SNAPPER_COUNT = 500, BARRACUDA_COUNT = 2, SHARK_COUNT = 1;
     public static int WIDTH = 1600, HEIGHT = 900;
     public static float scaling;
 
@@ -29,30 +28,34 @@ public class SwarmingBehavior extends Window {
     /** last fps time */
     private long lastFPS;
 
-    public SwarmingBehavior() {
-        super("Swarming behavior", WIDTH, HEIGHT);
-        initDisplay(NORMAL);
+    public SwarmingBehavior(int width, int height, int displayMode, int snapperCount, int barracudaCount, int sharkCount) {
+        super("Swarming behavior", width, height);
+        initDisplay(displayMode);
+
+        WIDTH = getWidth();
+        HEIGHT = getHeight();
 
         float dpi = Toolkit.getDefaultToolkit().getScreenResolution();
         scaling = dpi / 160;
-        System.out.println("DPI: " + dpi + " Scaling: " + scaling + " Scaling 2:" + Display.getPixelScaleFactor());
+
+        System.out.println("DPI: " + dpi + " Scaling: " + scaling);
         fishManager = FishManager.getInstance();
 
         Random random = ThreadLocalRandom.current();
-        for (int i = 0; i < SNAPPER_COUNT; i++) {
-            Snapper snapper = new Snapper(random.nextInt(WIDTH), random.nextInt(HEIGHT), random.nextInt(359));
+        for (int i = 0; i < snapperCount; i++) {
+            Snapper snapper = new Snapper(random.nextInt(getWidth()), random.nextInt(getHeight()), random.nextInt(359));
             snapper.setBehavior(1, 1, 35, 300);
             fishManager.addFish(snapper);
         }
 
-        for (int i = 0; i < BARRACUDA_COUNT; i++) {
-            Barracuda barracuda = new Barracuda(random.nextInt(WIDTH), random.nextInt(HEIGHT), random.nextInt(359));
+        for (int i = 0; i < barracudaCount; i++) {
+            Barracuda barracuda = new Barracuda(random.nextInt(getWidth()), random.nextInt(getHeight()), random.nextInt(359));
             barracuda.setBehavior(2, 1);
             fishManager.addFish(barracuda);
         }
 
-        for (int i = 0; i < SHARK_COUNT; i++) {
-            Shark shark = new Shark(random.nextInt(WIDTH), random.nextInt(HEIGHT), random.nextInt(359));
+        for (int i = 0; i < sharkCount; i++) {
+            Shark shark = new Shark(random.nextInt(getWidth()), random.nextInt(getHeight()), random.nextInt(359));
             shark.setBehavior(3, 1);
             fishManager.addFish(shark);
         }
@@ -64,7 +67,7 @@ public class SwarmingBehavior extends Window {
 
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
-        glOrtho (0, WIDTH, HEIGHT, 0, 0, 1);
+        glOrtho (0, getWidth(), getHeight(), 0, 0, 1);
         glMatrixMode(GL_MODELVIEW);
         glDisable(GL_DEPTH_TEST);
 
@@ -74,6 +77,7 @@ public class SwarmingBehavior extends Window {
 
             glClearColor(0.1f, 0.2f, 0.3f, 1);
             glClear(GL_COLOR_BUFFER_BIT);
+
 
             fishManager.getFishMap().forEach((id, fish) -> {
                 if (!fish.eaten) {
@@ -90,6 +94,7 @@ public class SwarmingBehavior extends Window {
         }
 
         Display.destroy();
+        fishManager.removeAll();
     }
 
     private void handleInputs() {
@@ -98,16 +103,28 @@ public class SwarmingBehavior extends Window {
             int dy = -Mouse.getDY();
 
             glTranslatef(dx, dy, 0);
-            Snapper.BORDER_LEFT -= dx;
-            Snapper.BORDER_RIGHT -= dx;
-            Snapper.BORDER_TOP -= dy;
-            Snapper.BORDER_BOTTOM -= dy;
+            BaseObject.BORDER_LEFT -= dx;
+            BaseObject.BORDER_RIGHT -= dx;
+            BaseObject.BORDER_TOP -= dy;
+            BaseObject.BORDER_BOTTOM -= dy;
         }
     }
 
     public static void main(String[] args){
-        new SwarmingBehavior().start();
+        if (args.length != 7) {
+            new SwarmingBehavior(1600, 900, NORMAL, 300, 2, 1).start();
+        } else {
+            int width = Integer.valueOf(args[1]);
+            int height = Integer.valueOf(args[2]);
+            int windowMode = Integer.valueOf(args[3]);
+            int snapperCount = Integer.valueOf(args[4]);
+            int barracudaCount = Integer.valueOf(args[5]);
+            int sharkCount = Integer.valueOf(args[6]);
+
+            new SwarmingBehavior(width, height, windowMode, snapperCount, barracudaCount, sharkCount).start();
+        }
     }
+
 
     /**
      * Calculate how many milliseconds have passed
@@ -138,7 +155,7 @@ public class SwarmingBehavior extends Window {
     public void updateFPS() {
         if (getTime() - lastFPS > 1000) {
             Display.setTitle("FPS: " + fps + " | Snappers: " + Snapper.snapperCount
-                    + " | Barracudas: " + Barracuda.barracudaCount + " | Sharks: " + SHARK_COUNT);
+                    + " | Barracudas: " + Barracuda.barracudaCount + " | Sharks: " + Shark.sharkCount);
             fps = 0;
             lastFPS += 1000;
         }

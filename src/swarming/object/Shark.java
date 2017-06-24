@@ -10,10 +10,12 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class Shark extends Fish {
 
+    public static int sharkCount = 0;
     private static float LENGTH = 25 * SwarmingBehavior.scaling, WIDTH = 15 * SwarmingBehavior.scaling;
 
     public Shark(double x, double y, double orientationAngle) {
         super(x, y, orientationAngle);
+        sharkCount++;
     }
 
     public void setBehavior(double speed, double rotationSpeed) {

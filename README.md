@@ -1,5 +1,5 @@
 # swarming-behavior
-Simple simulation of fish swarms using OpenGL and LWJGL 2 (Lightweight Java Game Library) including a launcher written with JavaFX
+Simple simulation/game of fish swarms using OpenGL and LWJGL 2 (Lightweight Java Game Library) including a launcher written with JavaFX
 
 ## Getting started
 This software needs a working version of JRE 8+ installed on your machine to run.

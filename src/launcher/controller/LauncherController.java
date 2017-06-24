@@ -36,8 +36,8 @@ public class LauncherController implements Initializable {
         sliderSnappers.setMax(1000);
         sliderSnappers.setValue(300);
         sliderSnappers.setBlockIncrement(100);
-        sliderSnappers.setMajorTickUnit(500);
-        sliderSnappers.setMinorTickCount(5);
+        sliderSnappers.setMajorTickUnit(250);
+        sliderSnappers.setMinorTickCount(4);
         sliderSnappers.setShowTickMarks(true);
         sliderSnappers.setShowTickLabels(true);
         sliderSnappers.valueProperty().addListener((observable, oldValue, newValue) ->
@@ -49,8 +49,8 @@ public class LauncherController implements Initializable {
         sliderBarracudas.setMax(20);
         sliderBarracudas.setValue(2);
         sliderBarracudas.setBlockIncrement(1);
-        sliderBarracudas.setMajorTickUnit(10);
-        sliderBarracudas.setMinorTickCount(5);
+        sliderBarracudas.setMajorTickUnit(5);
+        sliderBarracudas.setMinorTickCount(4);
         sliderBarracudas.setShowTickMarks(true);
         sliderBarracudas.setShowTickLabels(true);
         sliderBarracudas.valueProperty().addListener((observable, oldValue, newValue) ->

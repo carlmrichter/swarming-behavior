@@ -8,7 +8,7 @@ public abstract class BaseObject {
     public Vektor2D position;
     protected static int counter = 0;
 
-    private static final int BOXING = 15;
+    public static final int BOXING = 15;
     public static int
             BORDER_LEFT = -BOXING,
             BORDER_TOP = SwarmingBehavior.HEIGHT + BOXING,
@@ -27,6 +27,8 @@ public abstract class BaseObject {
     public abstract void render();
 
     protected void transformCoordinates() {
+
+
         if (position.x < BORDER_LEFT) {
             position.x = BORDER_RIGHT;
         } else if (position.x > BORDER_RIGHT) {

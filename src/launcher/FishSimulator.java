@@ -17,7 +17,7 @@ public class FishSimulator extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        primaryStage.setTitle("FishSimulator Launcher");
+        primaryStage.setTitle("Simulation Launcher");
 
         FXMLLoader fxmlLoader = new FXMLLoader();
         

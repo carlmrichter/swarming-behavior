@@ -2,11 +2,9 @@ package swarming;
 
 import org.lwjgl.Sys;
 import org.lwjgl.input.Mouse;
-import swarming.behavior.BarracudaBehavior;
 import swarming.frame.Window;
 import swarming.object.*;
 import org.lwjgl.opengl.Display;
-
 import java.awt.*;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -30,6 +28,8 @@ public class SwarmingBehavior extends Window {
 
     public SwarmingBehavior(int width, int height, int displayMode, int snapperCount, int barracudaCount, int sharkCount) {
         super("Swarming behavior", width, height);
+        setWidth(width);
+        setHeight(height);
         initDisplay(displayMode);
 
         WIDTH = getWidth();
@@ -67,7 +67,7 @@ public class SwarmingBehavior extends Window {
 
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
-        glOrtho (0, getWidth(), getHeight(), 0, 0, 1);
+        glOrtho(0, WIDTH, HEIGHT, 0, 0, 1);
         glMatrixMode(GL_MODELVIEW);
         glDisable(GL_DEPTH_TEST);
 
@@ -121,6 +121,8 @@ public class SwarmingBehavior extends Window {
             int barracudaCount = Integer.valueOf(args[5]);
             int sharkCount = Integer.valueOf(args[6]);
 
+            BaseObject.BORDER_TOP = height + BaseObject.BOXING;
+            BaseObject.BORDER_RIGHT = width + BaseObject.BOXING;
             new SwarmingBehavior(width, height, windowMode, snapperCount, barracudaCount, sharkCount).start();
         }
     }

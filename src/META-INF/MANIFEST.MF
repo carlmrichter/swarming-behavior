@@ -1,4 +1,4 @@
 Manifest-Version: 1.0
-Class-Path: lib/lwjgl.jar lib/lwjgl-utils.jar
+Class-Path: lwjgl.jar lwjgl-utils.jar
 Main-Class: launcher.FishSimulator
 

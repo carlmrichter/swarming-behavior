@@ -10,7 +10,7 @@
 \usepackage{amssymb}
 \usepackage{amstext}
 \usepackage{amsmath}
-\usepackage{cite} 
+\usepackage{cite}
 % Seitenränder
 \usepackage[paper=a4paper,left=25mm,right=25mm,top=25mm,bottom=25mm]{geometry}
 % Farben
@@ -130,5 +130,67 @@ Der Hai ist in den Weltmeeren an der Spitze der Nahrungskette. Auch in dieser Si
 	\lstinline[]$ROTATION_SPEED$ & 1\\
 \hline
 \end{tabular}
+
+\section{Oberflächenlogik}
+\subsection{Koordinatentransformation}
+\textit{(vgl. \lstinline{transformCoordinates()}-Funktion in der Klasse \lstinline{BaseObject})}
+
+\vspace{0.5em}
+Die Positionen der einzelnen Individuen werden, sobald sie den rechten bzw. unteren Bildschirmrand erreichen für die linke bzw. obere Seite neu berechnet. Somit bleiben die Individuen kontinuierlich im sichtbaren Bereich des Bildschirms.
+\subsection{Berechnung der Punkte}
+Um die individuellen Fische mittels OpenGL darstellen zu können, werden drei Punkte benötigt, die dann ein Dreieck bilden, in dem Farbe gezeichnet wird. Diese Dreiecke werden anhand des Ortsvektors zur aktuellen Position des Individuums und des Vektors, der der Orientierung entspricht, d.h. in welche Richtung der Fisch zeigt, berechnet.
+
+\vspace{0.5em}
+Dazu wird zu aller erst zum Ortsvektor der Orientierungsvektor* addiert um die Spitze (Punkt 1) zu berechnen. Für die beiden hinteren Punkte wird der Orientierungsvektor vom Ortsvektor subtrahiert und dann entweder der Normalenvektor* des Orientierungsvektors addiert (Punkt 2) oder subtrahiert (Punkt 3).
+
+\vspace{0.5em}
+\textit{* Diese Vektoren werden entsprechend der Skalierung und der Größe des Individuums noch mit einem Skalar multipliziert um die Größe auf dem Bildschirm anzupassen}
+
+
+\section{Handhabung}
+\subsection{Starten der Simulation über den Launcher}
+Der Launcher kann entweder über die JAR-Datei oder sofern der Quellcode selbst kompiliert wurde, über die Klasse \lstinline{FishSimulator} gestartet werden.
+
+\vspace{0.5em}
+Im Launcher der Simulation lassen sich die Anzahl der Individuen (Schnapper, Barrakudas) als auch der Hai an- und ausschalten, die horizontale sowie vertikale Auflösung der Anwendung und der Fenstermodus (Fenster, Maximiert oder Vollbild) einstellen.
+
+\vspace{0.5em}
+Über den großen Button ``Launch Simulation'' kann die Simulation schließlich gestartet werden.
+
+\subsection{Starten der Simulation über die Konsole}
+Sofern der Quellcode selbst kompiliert wurde, kann die Simulation auch direkt über die Konsole gestartet werden, und zwar über die Klasse \lstinline{SwarmingBehavior}.
+
+\vspace{0.5em}
+Folgende Übergabeparameter sind dabei zu verwenden:
+
+\vspace{0.5em}
+\begin{tabular}{|l|l|}
+\hline
+	\textbf{Parameter} & \textbf{Erklärung}\\
+\hline
+\hline
+	\lstinline[]$width$  & die gewünschte Breite des OpenGL Fensters in Pixeln\\
+\hline
+	\lstinline[]$height$ & die gewünschte Höhe des OpenGL Fensters in Pixeln\\
+\hline
+	\lstinline[]$windowMode$ & 0 = Fenstermodus, 1 = Maximiert, 2 = Vollbild\\
+\hline
+	\lstinline[]$snapperCount$ & Anzahl der Schnapper\\
+\hline
+	\lstinline[]$barracudaCount$ & Anzahl der Barrakudas\\
+\hline
+	\lstinline[]$sharkCount$ & Anzahl der Haie\\
+\hline
+\end{tabular}
+
+\vspace{0.5em}
+Es können entweder alle oder keine Parameter verwendet werden. Sofern keine Parameter angegeben werden, verwendet die Anwendung Standardwerte für alle Parameter.
+\newpage
+\subsection{Steuerung}
+\subsubsection{Hai}
+Der bzw. die Haie können mit den Pfeiltasten nach links und nach rechts gesteuert werden.
+\subsubsection{Kamera}
+Die Kameraansicht kann mithilfe der gedrückten linken Maustaste verschoben werden.
+
 
 \end{document}

@@ -49,22 +49,22 @@ showstringspaces=false}
 \tableofcontents
 \newpage
 \section{Abstract}
-Die vorliegende Arbeit dokumentiert die Visualisierung eines Schwarmverhalten von Raub- und Friedfischen im Meer. Als exemplarische Beispiele hierfür werden Rote Schnapper, Barrakudas und Haie als grafische Primitive dargestellt. Die Überlegungen basieren auf Craig Reynolds drei großen Regeln: Separation, Ausrichtung und Kohäsion. Umgesetzt ist dieses Projekt in Java, OpenGL mit LWJGL2 und enstand im Rahmen der Veranstaltung 'Computergrafik/Visualisierung II' an der HTW Dresden bei Professor Block-Berlitz.
+Die vorliegende Arbeit dokumentiert die Visualisierung eines Schwarmverhaltens von Raub- und Friedfischen im Meer. Als exemplarische Beispiele hierfür werden Rote Schnapper, Barrakudas und Haie als grafische Primitive dargestellt. Die Überlegungen basieren auf Craig Reynolds drei großen Regeln: Separation, Ausrichtung und Kohäsion. Umgesetzt ist dieses Projekt in Java, OpenGL mit LWJGL2 und enstand im Rahmen der Veranstaltung 'Computergrafik/Visualisierung II' an der HTW Dresden bei Professor Block-Berlitz.
 \section{Schwarmverhalten}
 Eine Vielzahl von Lebewesen halten sich in unserer Natur in großen Schwärmen auf. Meist gehören alle Mitglieder einer Aggregation der gleichen Art an. Typische Schwarmtiere sind Ameisen, Fische oder Vögel. Die Schwarmbildung hat für die Tiere große Vorteile: Gemeinsame Nahrungssuche, Schutz vor möglichen Fressfeinden und schnellere Fortbewegung.\\
-1986 veröffentlichte Craig Reynolds, Boids: Das erste, am Computeram Computer modellierte Schwarmverhalten. Reynolds Prinzip basiert auf 3 Regeln:
+1986 veröffentlichte Craig Reynolds das erste, am Computer modellierte Schwarmverhalten namens 'Boids'. Reynolds Prinzip basiert auf 3 Regeln:
 \begin{itemize}
 	\item \textbf{Kohäsion:} Bewege dich in Richtung des Mittelpunkts derer, die du in deinem Umfeld siehst.
-	\item \textbf{Separation:} Bewege dich weg, sobald dir jemand zu nahme kommt.
+	\item \textbf{Separation:} Bewege dich weg, sobald dir Jemand zu nahe kommt.
 	\item \textbf{Alignment:} Bewege dich in etwa in dieselbe Richtung wie deine Nachbarn.
 \end{itemize}
 Dieses Prinzip lässt sich grob auf die meisten Schwärme übertragen.
 \section{Fiktiver Schwarm}
-Zur Visualisierung eines Schwarmverhaltens entschieden wir uns für einen Salzwasserfischschwarm, bestehend aus Roten Schnappern, die gemeinsam in Schwärmen durch das Wasser schwimmen und sich von Plankton ernähren, Barrakudas die als Einzelgänger jagt auf kleinere Fische machen (hier Schnapper) und ein Hai, welcher sowohl Schnapper als auch Barrakudas frisst.
+Zur Visualisierung eines Schwarmverhaltens entschieden wir uns für einen Salzwasserfischschwarm, bestehend aus Roten Schnappern, die gemeinsam in Schwärmen durch das Wasser schwimmen und sich von Plankton ernähren, Barrakudas die als Einzelgänger Jagdt auf kleinere Fische machen (hier Schnapper) und einen Hai, welcher sowohl Schnapper als auch Barrakudas frisst.
 \section{Eigenschaften und Verhalten der Tiere mit deren Repräsentationen im Programmcode}
-Jede Tierart hat in der Natur eine Vielzahl verschiedener Verhaltensmuster und Eigenschaften, welche die Lebewesen charakteristisch Formen. Dazu zählen beispielsweise der Körperbau, Höchstgeschwindigkeit, Sichtweite und Intelligenz. In unserer Simulation können wir viele dieser Einflussfaktoren nachbilden.
-So besitz jeder Fisch eine Höchstgeschwindigkeit in Bewegungsrichtung und eine maximale Drehgeschwindkeit um die eigene Achse. Diese Werte sind abhängig von der Masse in Abhängigkeit zum Bezugssystem.\\
-Zusätzlich hat jeder Fisch eine bestimmte Sehstärke um eigene und fremde Artgenossen für Kollisionsvermeidung, Schwarmbildung und Lebensgefahr zu erkennen.
+Jede Tierart hat in der Natur eine Vielzahl verschiedener Verhaltensmuster und Eigenschaften, welche die Lebewesen charakteristisch formen. Dazu zählen beispielsweise Körperbau, Höchstgeschwindigkeit, Sichtweite und Intelligenz. In unserer Simulation können wir viele dieser Einflussfaktoren nachbilden.
+So besitzt jeder Fisch eine Höchstgeschwindigkeit in Bewegungsrichtung und eine maximale Drehgeschwindkeit um die eigene Achse. Diese Werte sind abhängig von der Masse in Abhängigkeit zum Bezugssystem.\\
+Zusätzlich hat jeder Fisch eine bestimmte Sehstärke, um eigene und fremde Artgenossen für Kollisionsvermeidung, Schwarmbildung und Lebensgefahr zu erkennen.
 \newpage
 \subsection{Grundüberlegungen}
 Alle dargestellten Lebewesen erhalten - je nach Tierart und vorhandener Gruppenzugehörigkeit - besondere Eigenschaften. Die komplette Berechnungsgrundlage basiert auf der Vektorklasse aus Teil I dieser Arbeit.
@@ -75,10 +75,10 @@ Die Orientierung bzw. Bewegungsrichtung wird als normierter Vektor \( \vec{v}=(x
 \subsubsection{Bewegung}
 Als Bewegung ist \( \vec{v} \cdot V_{bew} \) definiert. \( V_{bew} \) steht für die Bewegungsgeschwindigkeit.
 \subsubsection{Drehung}
-Jedes dargstellte Tier hat eine festgelegte Drehgeschwindigkeit. Das Prinzip ist relativ simpel gehalten: Die kleinen Fische sind verhältnissmäßig schneller in der Drehbewegung, große Exemplare langsamer.\\
+Jedes dargstellte Tier hat eine festgelegte Drehgeschwindigkeit. Das Prinzip ist relativ simpel gehalten: Die kleinen Fische sind verhältnismäßig schneller in der Drehbewegung, große Exemplare langsamer.\\
 Die Klasse \lstinline{Vektor2D} und \lstinline{LineareAlgebra} wurde um die Funktion \lstinline{rotate} erweitert. Berechnungsgrundlage ist die Drehmatrix. Damit die Drehung der Fische immer harmonisch abläuft, bleibt die Geschwindigkeit konstant.
 \subsection{Schnapper}
-Ein Schnapper wird im virtuellen Meer mit folgenden Konstanten instanziiert, falls nicht anders angegeben sind alle Werte Verhältnissangaben. \\\\
+Ein Schnapper wird im virtuellen Meer mit folgenden Konstanten instanziiert, falls nicht anders angegeben sind alle Werte Verhältnisangaben. \\\\
 \begin{tabular}{|l|l|}
 \hline
 	\textbf{Eigenschaft} & \textbf{Wert}\\
@@ -109,7 +109,7 @@ Eine Ansammlung von wenigstens fünf Fischen im 150px Radius gilt in dieser Simu
 Kommt ein feindlicher Fisch zu nahe, brechen die Fische den Schwarm auf und versuchen zu fliehen. Ist ein Fisch alleine unterwegs, schwimmt er so lange in die gleiche Richtung, bis er einen Verband von Artgenossen findet und sich diesem anschließt.
 
 \subsection{Barrakuda}
-Barrakudas sind exzellente Jäger. Sie treten bei der Jagt als Einzelgänger auf. Das bedeutet für die Simulation, dass auf Alignment und Kohäsion verzichtet werden kann. Es wird nur auf Separation zwischen den Barrakudas geachtet, damit die Fische kein fremdes Jagtrevier eines Artgenossen betreten.\\
+Barrakudas sind exzellente Jäger. Sie treten bei der Jagdt als Einzelgänger auf. Das bedeutet für die Simulation, dass auf Alignment und Kohäsion verzichtet werden kann. Es wird nur auf Separation zwischen den Barrakudas geachtet, damit die Fische kein fremdes Jagdtrevier eines Artgenossen betreten.\\
 
 \begin{tabular}{|l|l|}
 \hline
@@ -129,7 +129,7 @@ Barrakudas sind exzellente Jäger. Sie treten bei der Jagt als Einzelgänger auf
 \end{tabular}
 
 \subsection{Hai}
-Der Hai ist in den Weltmeeren an der Spitze der Nahrungskette. Auch in dieser Simulation kann der Hai als einziges fiktives Lebewesen sowohl Schnapper als auch Barrakuda fressen. Der Hai ist durch seine riesige Schwanzflosse viel schneller in der Vorwärtsbewegung als alle anderen Fische. Durch seine Größe ist er aber in seiner Rotationsgeschwindigkeit nicht überlegen. Der Knorpelfisch ist in der Simulation ein einsamer Einzelgänger ohne Artgenossen. Er lässt sich über die Pfeiltasten auf der Tastatur steuern.\\
+Der Hai ist in den Weltmeeren an der Spitze der Nahrungskette. Auch in dieser Simulation kann der Hai als einziges fiktives Lebewesen sowohl Schnapper als auch Barrakuda fressen. Der Hai ist durch seine riesige Schwanzflosse viel schneller in der Vorwärtsbewegung als alle anderen Fische. Durch seine Größe ist er aber in seiner Rotationsgeschwindigkeit nicht überlegen. Er lässt sich über die Pfeiltasten auf der Tastatur steuern.\\
 
 \begin{tabular}{|l|l|}
 \hline
@@ -144,21 +144,21 @@ Der Hai ist in den Weltmeeren an der Spitze der Nahrungskette. Auch in dieser Si
 
 \section{Oberflächenlogik}
 \subsection{Skalierung}
-So gut wie alle Parameter der einzelnen Fischarten, wie beispielsweise \lstinline[]$COMFORT_RADIUS$ oder \lstinline[]$PANIC_RADIUS$ werden entsprechend der Pixeldichte des Displays skaliert. Die oben erwähnten Eigenschaften von Schnapper, Barrakuda und Hai sind somit die Grundwerte für die Skalierung.
+So gut wie alle Parameter der einzelnen Fischarten, wie beispielsweise \lstinline[]$COMFORT_RADIUS$ oder \lstinline[]$PANIC_RADIUS$, werden entsprechend der Pixeldichte des Displays skaliert. Die oben erwähnten Eigenschaften von Schnapper, Barrakuda und Hai sind somit die Grundwerte für die Skalierung.
 
 \subsection{Koordinatentransformation}
 \textit{(vgl. \lstinline{transformCoordinates()}-Funktion in der Klasse \lstinline{BaseObject})}
 
 \vspace{0.5em}
-Die Positionen der einzelnen Individuen werden, sobald sie den rechten bzw. unteren Bildschirmrand erreichen für die linke bzw. obere Seite neu berechnet. Somit bleiben die Individuen kontinuierlich im sichtbaren Bereich des Bildschirms.
+Die Positionen der Individuen werden, sobald sie den rechten bzw. unteren Bildschirmrand erreichen, für die linke bzw. obere Seite neu berechnet. Somit bleiben die Individuen kontinuierlich im sichtbaren Bereich des Bildschirms.
 
 \vspace{0.5em}
-Damit die Fische nicht in den Bildschirm ``herein-'' bzw. ``herausploppen'' werden die Fische auch \lstinline{BOXING = 15} Pixel auf jeder Seite außerhalb des sichtbaren Bereichs gerendert.
+Damit die Fische nicht in den Bildschirm ``herein-'' bzw. ``herausploppen'', werden die Fische auch \lstinline{BOXING = 15} Pixel auf jeder Seite außerhalb des sichtbaren Bereichs gerendert.
 \subsection{Berechnung der Punkte}
 Um die individuellen Fische mittels OpenGL darstellen zu können, werden drei Punkte benötigt, die dann ein Dreieck bilden, in dem Farbe gezeichnet wird. Diese Dreiecke werden anhand des Ortsvektors zur aktuellen Position des Individuums und des Vektors, der der Orientierung entspricht, d.h. in welche Richtung der Fisch zeigt, berechnet.
 
 \vspace{0.5em}
-Dazu wird zu aller erst zum Ortsvektor der Orientierungsvektor* addiert um die Spitze (Punkt 1) zu berechnen. Für die beiden hinteren Punkte wird der Orientierungsvektor vom Ortsvektor subtrahiert und dann entweder der Normalenvektor* des Orientierungsvektors addiert (Punkt 2) oder subtrahiert (Punkt 3).
+Dazu wird zu aller erst zum Ortsvektor der Orientierungsvektor* addiert, um die Spitze (Punkt 1) zu berechnen. Für die beiden hinteren Punkte wird der Orientierungsvektor vom Ortsvektor subtrahiert und dann entweder der Normalenvektor* des Orientierungsvektors addiert (Punkt 2) oder subtrahiert (Punkt 3).
 
 \vspace{0.5em}
 \textit{* Diese Vektoren werden entsprechend der Skalierung und der Größe des Individuums noch mit einem Skalar multipliziert um die Größe auf dem Bildschirm anzupassen}

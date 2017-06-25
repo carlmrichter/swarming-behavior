@@ -29,17 +29,18 @@ public class SnapperBehavior extends FishBehavior {
     @Override
     public void update() {
 
-        target = LineareAlgebra.mult(snapper.orientation, speed);
-//        target = LineareAlgebra.normalize(snapper.orientation);
-
-
-        target.add(panic());
-        target.add(cohesion());
-        target.add(separation());
-        target.add(alignment());
-        rotateToDirection(alignment(), this.snapper);
+//        target = LineareAlgebra.mult(snapper.orientation, speed);
+//        target.add(panic());
+//        target.add(cohesion());
+//        target.add(separation());
+//        target.add(alignment());
 //        target.normalize();
         //rotateToDirection(target, snapper);
+
+        panic();
+        cohesion();
+        separation();
+        alignment();
         adjustSpeed();
         snapper.position.add(LineareAlgebra.mult(snapper.orientation, speed));
 
@@ -178,6 +179,7 @@ public class SnapperBehavior extends FishBehavior {
         }
 
         alignment.normalize();
+        rotateToDirection(alignment, this.snapper);
         return alignment;
     }
 

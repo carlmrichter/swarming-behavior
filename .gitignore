@@ -1,3 +1,6 @@
 .idea/
 out/
 swarming-behavior.iml
+docs/
+!docs/doku.tex
+!docs/doku.pdf
